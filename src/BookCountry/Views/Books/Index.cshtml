@@ -10,10 +10,10 @@
         <th>Published on</th>
         <th>Publisher</th>
         <th>Language</th>
-        <th>Binding</th>
+        <th>Binding format</th>
         <th>ISBN13</th>
-        <th>Dewey Code</th>
-        <th>Price</th>
+        <th>Dewey code</th>
+        <th>Price, $</th>
     </tr>
     @foreach(var book in Model)
     {
@@ -21,7 +21,7 @@
             <td>@book.Id</td>
             <td>@book.Author_Id</td>
             <td>@book.Title</td>
-            <td>@book.Published_On</td>
+            <td>@book.Published_On.ToString("yyyy-mm-dd")</td>
             <td>@book.Publisher</td>
             <td>@book.Language</td>
             <td>@book.Binding_Format</td>
