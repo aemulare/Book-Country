@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BookCountry.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MySQL.Data.EntityFrameworkCore.Extensions;
 
 namespace BookCountry
 {
@@ -35,7 +37,11 @@ namespace BookCountry
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
-
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseMySQL(Configuration["Data:BookCountry:ConnectionString"]);
+            });
+            services.AddTransient<IBooksRepository, BooksRepository>();
             services.AddMvc();
         }
 

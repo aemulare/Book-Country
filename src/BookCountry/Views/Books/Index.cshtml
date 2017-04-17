@@ -1,1 +1,33 @@
-﻿<h1>This page is to show Books</h1>
+﻿@model IEnumerable<BookCountry.Models.Book>
+
+<h1>This page is to show Books</h1>
+<br/>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Author</th>
+        <th>Title</th>
+        <th>Published on</th>
+        <th>Publisher</th>
+        <th>Language</th>
+        <th>Binding</th>
+        <th>ISBN13</th>
+        <th>Dewey Code</th>
+        <th>Price</th>
+    </tr>
+    @foreach(var book in Model)
+    {
+        <tr>
+            <td>@book.Id</td>
+            <td>@book.Author_Id</td>
+            <td>@book.Title</td>
+            <td>@book.Published_On</td>
+            <td>@book.Publisher</td>
+            <td>@book.Language</td>
+            <td>@book.Binding_Format</td>
+            <td>@book.Isbn</td>
+            <td>@book.Dewey_Code</td>
+            <td>@book.Price</td>
+        </tr>
+    }
+</table>
