@@ -12,7 +12,7 @@ namespace BookCountry.Models
         public string Language { get; set; }
         public int Binding_Format { get; set; }
         public string Isbn { get; set; }
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
         public string Dewey_Code { get; set; }
         public DateTime Created_At { get; set; }
     }
