@@ -5,29 +5,31 @@
 <table>
     <tr>
         <th>ID</th>
-        <th>Author</th>
         <th>Title</th>
+        <th>Edition</th>
         <th>Published on</th>
-        <th>Publisher</th>
-        <th>Language</th>
-        <th>Binding format</th>
+        <th>Publisher Id</th>
+        <th>Language Id</th>
+        <th>Binding format Id</th>
         <th>ISBN13</th>
         <th>Dewey code</th>
         <th>Price, $</th>
+        <th>Quantity</th>
     </tr>
     @foreach(var book in Model)
     {
         <tr>
             <td>@book.Id</td>
-            <td>@book.Author_Id</td>
             <td>@book.Title</td>
+            <td>@book.Edition</td>
             <td>@book.Published_On.ToString("yyyy-MM-dd")</td>
-            <td>@book.Publisher</td>
-            <td>@book.Language</td>
-            <td>@book.Binding_Format</td>
+            <td>@book.Publisher_Id</td>
+            <td>@book.Language_Id</td>
+            <td>@book.Format_Id</td>
             <td>@book.Isbn</td>
             <td>@book.Dewey_Code</td>
             <td>@book.Price</td>
+            <td>@book.Quantity</td>
         </tr>
     }
 </table>

@@ -5,11 +5,10 @@ create table borrowers(
 `last_name` nvarchar(64) not null,
 `dob` date not null CHECK (`dob` between date '1900-01-01' and sysdate()),
 `phone` nvarchar(10) not null,
-`address_line1` nvarchar(64) not null,
-`address_line2` nvarchar(64) not null,
-`city` nvarchar(64) not null,
-`state` nvarchar(2) not null,
-`zip` nvarchar(5) not null,
+`address_id` int unsigned not null,
+`is_librarian` boolean default 'false',
 `created_at` datetime not null,
-primary key (`id`)
+
+primary key (`id`),
+foreign key (`address_id`) references addresses (`id`)
 );
