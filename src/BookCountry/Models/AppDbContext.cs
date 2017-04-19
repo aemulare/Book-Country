@@ -10,5 +10,15 @@ namespace BookCountry.Models
         }
 
         public DbSet<Book> Books { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Book>()
+                .HasOne(b => b.Publisher)
+                .WithMany(p => p.Books);
+        }
     }
 }

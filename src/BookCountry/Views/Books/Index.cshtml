@@ -22,12 +22,12 @@
             <td>@book.Id</td>
             <td>@book.Title</td>
             <td>@book.Edition</td>
-            <td>@book.Published_On.ToString("yyyy-MM-dd")</td>
-            <td>@book.Publisher_Id</td>
-            <td>@book.Language_Id</td>
-            <td>@book.Format_Id</td>
+            <td>@book.PublishedOn.ToString("yyyy-MM-dd")</td>
+            <td>@book.Publisher?.Name</td>
+            <td>@book.LanguageId</td>
+            <td>@book.FormatId</td>
             <td>@book.Isbn</td>
-            <td>@book.Dewey_Code</td>
+            <td>@book.DeweyCode</td>
             <td>@book.Price</td>
             <td>@book.Quantity</td>
         </tr>

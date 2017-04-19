@@ -1,35 +1,53 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookCountry.Models
 {
     public class Book
     {
+        [Column("id"), Required]
         public int Id { get; set; }
+
+        [Column("title"), Required]
         public string Title { get; set; }
+
+        [Column("edition")]
         public string Edition { get; set; }
 
-        [Column("published_on")]
-        public DateTime Published_On { get; set; }
+        [Column("publishedOn"), Required]
+        public DateTime PublishedOn { get; set; }
 
-        [Column("publisher_id")]
-        public int Publisher_Id { get; set; }
+        [Column("PublisherId"), Required]
+        public int PublisherId { get; set; }
 
-        [Column("language_id")]
-        public string Language_Id { get; set; }
+        [ForeignKey("PublisherId"), Required]
+        public Publisher Publisher { get; set; }
 
-        [Column("format_id")]
-        public int Format_Id { get; set; }
+        [Column("languageId"), Required]
+        public string LanguageId { get; set; }
 
+        [Column("formatId")]
+        public int FormatId { get; set; }
+
+        [Column("isbn"), Required]
         public string Isbn { get; set; }
 
-        [Column("dewey_code")]
-        public string Dewey_Code { get; set; }
+        [Column("deweyCode"), Required]
+        public string DeweyCode { get; set; }
+
+        [Column("price")]
         public decimal? Price { get; set; }
+
+        [Column("quantity")]
         public int? Quantity { get; set; }
 
-        [Column("created_at")]
-        public DateTime Created_At { get; set; }
+        [Column("createdAt"), Required]
+        public DateTime CreatedAt { get; set; }
+
     }
 
+
 }
+
+
