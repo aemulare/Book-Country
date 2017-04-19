@@ -8,9 +8,9 @@
         <th>Title</th>
         <th>Edition</th>
         <th>Published on</th>
-        <th>Publisher Id</th>
-        <th>Language Id</th>
-        <th>Binding format Id</th>
+        <th>Publisher</th>
+        <th>Language</th>
+        <th>Format</th>
         <th>ISBN13</th>
         <th>Dewey code</th>
         <th>Price, $</th>
@@ -23,9 +23,9 @@
             <td>@book.Title</td>
             <td>@book.Edition</td>
             <td>@book.PublishedOn.ToString("yyyy-MM-dd")</td>
-            <td>@book.Publisher?.Name</td>
-            <td>@book.LanguageId</td>
-            <td>@book.FormatId</td>
+            <td>@book.Publisher</td>
+            <td>@book.Language</td>
+            <td>@book.Format</td>
             <td>@book.Isbn</td>
             <td>@book.DeweyCode</td>
             <td>@book.Price</td>

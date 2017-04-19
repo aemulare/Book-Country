@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookCountry.Models;
+﻿using BookCountry.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -37,11 +33,8 @@ namespace BookCountry
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
-            services.AddDbContext<AppDbContext>(options =>
-            {
-                options.UseMySQL(Configuration["Data:BookCountry:ConnectionString"]);
-            });
-            services.AddTransient<IBooksRepository, BooksRepository>();
+            
+            services.AddSingleton<IBooksRepository>(new BooksRepository(Configuration));
             services.AddMvc();
         }
 

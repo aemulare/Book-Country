@@ -18,7 +18,7 @@ into table addresses fields terminated by ',' lines terminated by '\r\n';
 #2 TABLE PUBLISHERS
 CREATE TABLE publishers(
 `id` int unsigned not null auto_increment,
-`name` nvarchar(128),
+`name` nvarchar(128) not null,
 
 PRIMARY KEY(`id`));
 
@@ -99,8 +99,8 @@ create table books(
 `isbn` nvarchar(13) not null,
 `deweyCode` nvarchar(15) not null,
 `price` decimal(6,2),
-`quantity` int unsigned,
-`createdAt` DATETIME not null,
+`quantity` int unsigned not null default '1',
+`createdAt` DATETIME not null default current_timestamp,
 
 PRIMARY KEY (`id`),
 FOREIGN KEY (`publisherId`) REFERENCES publishers(`id`),
