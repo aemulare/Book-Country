@@ -1,9 +1,12 @@
 create table loans(
 `id` int unsigned not null,
-`borrower_id` int unsigned not null,
-`book_id` int unsigned not null,
-`issue_date` datetime not null,
-`return_date` datetime not null,
-`returned_on` datetime,
-primary key (`id`)
+`borrowerId` int unsigned not null,
+`bookId` int unsigned not null,
+`issueDate` datetime not null,
+`returnDate` datetime not null CHECK (`returnDate` >= `issueDate`),
+`returnedOn` datetime CHECK (`returnedOn` >= `issueDate`),
+
+PRIMARY KEY (`id`),
+FOREIGN KEY (`borrowerId`) REFERENCES borrowers(`id`),
+FOREIGN KEY (`bookId`) REFERENCES books(`id`)
 );
