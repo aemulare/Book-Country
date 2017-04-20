@@ -6,4 +6,4 @@ Coming soon...
 
 
 # Database
-![tag](https://raw.githubusercontent.com/aemulare/Book-Country/blob/master/doc/db_diagram.png)
+![tag](https://raw.githubusercontent.com/aemulare/Book-Country/master/doc/db_diagram.png)
