@@ -22,6 +22,20 @@ INNER JOIN authors a ON ba.authorId = a.id
 ORDER BY isbn, authorOrdinal;
 
 
+SELECT a.id, 
+	   a.firstName, 
+       a.middleName, 
+       a.lastName,
+       CONCAT_WS(' ', a.lastName, a.firstName, a.middleName) AS fullName,
+	   ba.authorOrdinal,
+       ba.authorId,
+       ba.bookId
+FROM authors a
+INNER JOIN books_authors ba ON a.id = ba.authorId
+INNER JOIN books b ON b.id = ba.bookId;
+
+
+
 
 
 

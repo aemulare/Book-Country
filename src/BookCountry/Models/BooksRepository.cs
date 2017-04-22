@@ -18,7 +18,11 @@ namespace BookCountry.Models
             this.configuration = configuration;
         }
 
+        public IDbConnection Connection =>
+           new MySqlConnection(configuration["Data:BookCountry:ConnectionString"]);
 
+
+        // collection of books
         public IEnumerable<Book> List
         {
             get
@@ -51,10 +55,31 @@ namespace BookCountry.Models
             }
         }
 
-        
 
-        public IDbConnection Connection =>
-            new MySqlConnection(configuration["Data:BookCountry:ConnectionString"]);
+        // collection of authors and their books (book id)
+        public IEnumerable<BookAuthor> BooksAuthors
+        {
+            get
+            {
+                using (var connection = Connection)
+                {
+                    string q = "SELECT a.id, " +
+                               "a.firstName, " +
+                               "a.middleName, " +
+                               "a.lastName, " +
+                               "ba.authorOrdinal, " +
+                               "ba.authorId, " +
+                               "ba.bookId " +
+                               "ba.role " +
+                               "FROM authors a " +
+                               "INNER JOIN books_authors ba ON a.id = ba.authorId " +
+                               "INNER JOIN books b ON b.id = ba.bookId";
+                    connection.Open();
+                    return connection.Query<BookAuthor>(q);
+                }
+            }
+        }
+
 
 
         public void Add(Book book)

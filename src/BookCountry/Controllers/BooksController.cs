@@ -31,6 +31,7 @@ namespace BookCountry.Controllers
         [HttpPost]
         public IActionResult Create(Book book)
         {
+            // hard-coded test book
             //var book = new Book
             //{
             //    Title = "NEW BOOK",

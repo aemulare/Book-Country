@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BookCountry.Models
 {
@@ -6,9 +7,11 @@ namespace BookCountry.Models
     { 
         public int Id { get; set; }
         public string Title { get; set; }
+
+        public List<BookAuthor> BooksAuthors { get; set; }
+
         public string Edition { get; set; }
         public DateTime PublishedOn { get; set; }
-
         public int PublisherId { get; set; }
         public string Publisher { get; set; }
 
