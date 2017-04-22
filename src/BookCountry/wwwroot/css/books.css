@@ -12,10 +12,49 @@ input, select, textarea {
     max-width: 600px;
 }
 
-li{
-    color: red;    
+.cover:before {
     font-family: 'FontAwesome';
-    content: '\f067';
+    content: '\f02d';
     display: inline-block;
-    margin:0 5px 0 -15px;
+    margin:0 5px 0 -15px;   
+}
+
+.book-lang:before{
+    font-family: 'FontAwesome';
+    content: '\f1ab';
+    display: inline-block;
+    margin:0 5px 0 -15px;  
+}
+
+.publisher:before{
+    font-family: 'FontAwesome';
+    content: '\f1f9';
+    display: inline-block;
+    margin:0 5px 0 -15px;  
+}
+
+.isbn:before{
+    font-family: 'FontAwesome';
+    content: '\f02a';
+    display: inline-block;
+    margin:0 5px 0 -15px;  
+}
+
+.list-group-item {
+    border: none;
+}
+
+.imgborder {
+   display:inline-block;
+   position:relative;
+   border:1px solid #ccc;
+   padding:5px;
+   background:#f2f2f2;
+   margin-bottom:30px;
+}
+
+.s1 {
+   -webkit-box-shadow: 0 28px 16px -26px rgba(0, 0, 0, 0.5);
+   -moz-box-shadow: 0 28px 16px -26px rgba(0, 0, 0, 0.5);
+   box-shadow: 0 28px 16px -26px rgba(0, 0, 0, 0.5);
 }

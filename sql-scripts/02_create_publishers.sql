@@ -3,3 +3,6 @@ CREATE TABLE publishers(
 `name` nvarchar(128) not null,
 
 PRIMARY KEY(`id`));
+
+CREATE INDEX idx_publishers_name
+ON publishers(`name`);

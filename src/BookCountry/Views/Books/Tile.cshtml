@@ -7,16 +7,17 @@
     @foreach (var book in Model)
     {
         <div class="col-lg-4">
-            <div class="card" style="width: 20rem;">
-                <img class="card-img-top" src="http://placehold.it/250x350" alt="Card image cap">
+            <div class="card" style="width: 40rem;">
+                <img class="card-img-top img-responsive imgborder s1" src="@book.Cover" alt="Card image cap">
                 <div class="card-block">
                     <h4 class="card-title">@book.Title</h4>
-                    <p class="card-text">by First Last</p>
+                    <p class="card-text">by @book.Authors</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item fa fa-book">Cras justo odio</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
+                    <li class="list-group-item cover">@book.Format</li>
+                    <li class="list-group-item publisher"><strong>Publisher:&nbsp;</strong>@book.Publisher</li>
+                    <li class="list-group-item book-lang">@book.Language</li>
+                    <li class="list-group-item book-lang isbn">@book.Isbn</li>
                 </ul>
                 <div class="card-block">
                     <a href="#" class="card-link">Card link</a>

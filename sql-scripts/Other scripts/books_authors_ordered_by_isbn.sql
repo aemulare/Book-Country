@@ -26,10 +26,10 @@ SELECT a.id,
 	   a.firstName, 
        a.middleName, 
        a.lastName,
-       CONCAT_WS(' ', a.lastName, a.firstName, a.middleName) AS fullName,
 	   ba.authorOrdinal,
        ba.authorId,
-       ba.bookId
+       ba.bookId,
+       ba.role
 FROM authors a
 INNER JOIN books_authors ba ON a.id = ba.authorId
 INNER JOIN books b ON b.id = ba.bookId;

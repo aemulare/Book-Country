@@ -43,14 +43,19 @@ namespace BookCountry.Models
                                "b.deweyCode, " +
                                "b.price, " +
                                "b.quantity, " +
-                               "b.createdAt " +
+                               "b.createdAt, " +
+                               "b.cover " +
                                "FROM books b " +
                                "INNER JOIN publishers ON b.publisherId = publishers.id " +
                                "INNER JOIN languages ON b.languageId = languages.id " +
                                "INNER JOIN formats ON b.formatId = formats.id";
 
                     connection.Open();
-                    return connection.Query<Book>(q);
+                    var books = connection.Query<Book>(q).ToList();
+                    var authors = BooksAuthors.ToList();
+                    foreach (var book in books)
+                        book.BooksAuthors = (from a in authors where a.BookId == book.Id select a).ToList();
+                    return books;
                 }
             }
         }
@@ -69,7 +74,7 @@ namespace BookCountry.Models
                                "a.lastName, " +
                                "ba.authorOrdinal, " +
                                "ba.authorId, " +
-                               "ba.bookId " +
+                               "ba.bookId, " +
                                "ba.role " +
                                "FROM authors a " +
                                "INNER JOIN books_authors ba ON a.id = ba.authorId " +
