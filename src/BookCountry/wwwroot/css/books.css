@@ -19,19 +19,28 @@ input, select, textarea {
     margin:0 5px 0 -15px;   
 }
 
-.book-lang:before{
+.book-lang:before {
     font-family: 'FontAwesome';
     content: '\f1ab';
     display: inline-block;
     margin:0 5px 0 -15px;  
 }
 
-.publisher:before{
+.publisher:before {
     font-family: 'FontAwesome';
     content: '\f1f9';
     display: inline-block;
-    margin:0 5px 0 -15px;  
+    margin: 0 5px 0 -15px;  
 }
+
+
+.tpages:before {
+    font-family: 'FontAwesome';
+    content: '\f0f6';
+    display: inline-block;
+    margin: 0 5px 0 -15px;  
+}
+
 
 .isbn:before{
     font-family: 'FontAwesome';
@@ -39,6 +48,8 @@ input, select, textarea {
     display: inline-block;
     margin:0 5px 0 -15px;  
 }
+
+
 
 .list-group-item {
     border: none;

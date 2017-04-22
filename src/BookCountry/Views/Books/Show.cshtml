@@ -1,21 +1,59 @@
 ﻿@model BookCountry.Models.Book
+@{ var book = Model;}
 
-<div class="col-lg-4">
-    <div class="card" style="width: 38rem;">
-        <img class="card-img-top img-responsive imgborder s1" src="@book.Cover" alt="Card image cap">
-        <div class="card-block">
-            <h4 class="card-title"><strong>@book.Title</strong></h4>
-            <p class="card-text">by <strong>@book.Authors</strong></p>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item cover"><strong>Format:&nbsp;</strong>@book.Format</li>
-            <li class="list-group-item publisher"><strong>Publisher:&nbsp;</strong>@book.Publisher</li>
-            <li class="list-group-item book-lang"><strong>Language:&nbsp;</strong>@book.Language</li>
-            <li class="list-group-item isbn"><strong>ISBN-13:&nbsp;</strong>@book.Isbn</li>
-        </ul>
-        <div class="card-block">
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card" style="width: 38rem;">
+            <img class="card-img-top img-responsive imgborder s1" src="@book.Cover" alt="Card image cap">
+            <div class="card-block">
+                <h4 class="card-title"><strong>@book.Title</strong></h4>
+                <p class="card-text">by <strong>@book.Authors</strong>
+                <p class="card-text"> Edition:&nbsp;<strong>@book.Edition</strong></p>
+                <p class="card-text"> Published on:&nbsp;<strong>@book.PublishedOn.ToString("MM-dd-yyyy")</strong></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item cover"><strong>Format:&nbsp;</strong>@book.Format</li>
+                <li class="list-group-item tpages"><strong>Total pages:&nbsp;</strong>10</li>
+                <li class="list-group-item publisher"><strong>Publisher:&nbsp;</strong>@book.Publisher</li>
+                <li class="list-group-item book-lang"><strong>Language:&nbsp;</strong>@book.Language</li>
+                <li class="list-group-item isbn"><strong>ISBN-13:&nbsp;</strong>@book.Isbn</li>
+                <li class="list-group-item isbn"><strong>Dewey Code:&nbsp;</strong>@book.DeweyCode</li>
+                <li class="list-group-item">@book.Quantity copies available</li>
+            </ul>
+            <div class="card-block">
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+            </div>
         </div>
     </div>
 </div>
+
+
+@*
+    public int Id { get; set; }
+          public string Title { get; set; }
+
+          public List<BookAuthor> BooksAuthors { get; set; }
+
+          public string Authors => (from a in BooksAuthors select a.FullName).ToArray().Join(", ");
+
+          public string Edition { get; set; }
+          public DateTime PublishedOn { get; set; }
+          public int PublisherId { get; set; }
+          public string Publisher { get; set; }
+
+          public int LanguageId { get; set; }
+          public string Language { get; set; }
+
+          public int FormatId { get; set; }
+          public string Format { get; set; }
+
+          public string Isbn { get; set; }
+          public string DeweyCode { get; set; }
+          public decimal? Price { get; set; }
+          public int? Quantity { get; set; }
+          public DateTime CreatedAt { get; set; }
+
+          public string Cover { get; set; }
+          public int? TotalPages { get; set; }
+*@

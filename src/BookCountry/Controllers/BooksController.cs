@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using BookCountry.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +22,12 @@ namespace BookCountry.Controllers
 
         public IActionResult New() => View();
 
-        public IActionResult Show() => View();
+        public IActionResult Show(int bookId)
+        {
+            var book = books.List.FirstOrDefault(b => b.Id == bookId);
+            return View(book);
+        }
+            
 
 
         [HttpPost]

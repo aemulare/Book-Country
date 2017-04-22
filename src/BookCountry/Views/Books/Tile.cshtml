@@ -7,24 +7,27 @@
     @foreach (var book in Model)
     {
         <div class="col-lg-4">
-            <div class="card" style="width: 38rem;">
-                <a asp-controller="Books" asp-action="Show" asp-route-bookId="@book.Id">
+            <div class="card" style="width: 40rem;">
+                <a asp-action="Show" asp-route-bookId="@book.Id">
                     <img class="card-img-top img-responsive imgborder s1" src="@book.Cover" alt="Card image cap">
                 </a>
                 <div class="card-block">
                     <h4 class="card-title"><strong>@book.Title</strong></h4>
                     <p class="card-text">by <strong>@book.Authors</strong></p>
                 </div>
-                <ul class="list-group list-group-flush">
+                @*<ul class="list-group list-group-flush">
                     <li class="list-group-item cover"><strong>Format:&nbsp;</strong>@book.Format</li>
                     <li class="list-group-item publisher"><strong>Publisher:&nbsp;</strong>@book.Publisher</li>
                     <li class="list-group-item book-lang"><strong>Language:&nbsp;</strong>@book.Language</li>
                     <li class="list-group-item isbn"><strong>ISBN-13:&nbsp;</strong>@book.Isbn</li>
-                </ul>
+                </ul>*@
                 <div class="card-block">
                     <a href="#" class="card-link">Card link</a>
                     <a href="#" class="card-link">Another link</a>
                 </div>
+                <br/>
+                <br/>
+                <br />
             </div>
         </div>
     }   
