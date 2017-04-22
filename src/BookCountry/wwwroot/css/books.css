@@ -42,7 +42,14 @@ input, select, textarea {
 
 .list-group-item {
     border: none;
+    padding-top: 5px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    margin-bottom: -2px;
 }
+
+
 
 .imgborder {
    display:inline-block;
