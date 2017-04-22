@@ -11,3 +11,11 @@ td, th {
 input, select, textarea {
     max-width: 600px;
 }
+
+li{
+    color: red;    
+    font-family: 'FontAwesome';
+    content: '\f067';
+    display: inline-block;
+    margin:0 5px 0 -15px;
+}

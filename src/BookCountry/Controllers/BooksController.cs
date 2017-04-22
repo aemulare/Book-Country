@@ -20,6 +20,10 @@ namespace BookCountry.Controllers
             return View(books.List);
         }
 
+        public IActionResult Tile()
+        {
+            return View(books.List);
+        }
 
 
         public IActionResult New()
