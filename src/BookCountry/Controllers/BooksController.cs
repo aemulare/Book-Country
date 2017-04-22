@@ -15,39 +15,18 @@ namespace BookCountry.Controllers
         }
 
         // GET: /<controller>/
-        public IActionResult Index()
-        {
-            return View(books.List);
-        }
+        public IActionResult Index() => View(books.List);
 
-        public IActionResult Tile()
-        {
-            return View(books.List);
-        }
+        public IActionResult Tile() => View(books.List);
 
+        public IActionResult New() => View();
 
-        public IActionResult New()
-        {
-            return View();
-        }
+        public IActionResult Show() => View();
 
 
         [HttpPost]
         public IActionResult Create(Book book)
-        {
-            // hard-coded test book
-            //var book = new Book
-            //{
-            //    Title = "NEW BOOK",
-            //    PublishedOn = DateTime.Today,
-            //    PublisherId = 6,
-            //    LanguageId = 139,
-            //    FormatId = 1,
-            //    Isbn = "1234567892345",
-            //    DeweyCode = "005.23",
-            //    Quantity = 1,
-            //    CreatedAt = DateTime.Now
-            //};
+        { 
             book.CreatedAt = DateTime.Now;
             books.Add(book);
             return RedirectToAction(nameof(Index));

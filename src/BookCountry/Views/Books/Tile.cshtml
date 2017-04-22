@@ -7,8 +7,10 @@
     @foreach (var book in Model)
     {
         <div class="col-lg-4">
-            <div class="card" style="width: 40rem;">
-                <img class="card-img-top img-responsive imgborder s1" src="@book.Cover" alt="Card image cap">
+            <div class="card" style="width: 38rem;">
+                <a asp-controller="Books" asp-action="Show" asp-route-bookId="@book.Id">
+                    <img class="card-img-top img-responsive imgborder s1" src="@book.Cover" alt="Card image cap">
+                </a>
                 <div class="card-block">
                     <h4 class="card-title"><strong>@book.Title</strong></h4>
                     <p class="card-text">by <strong>@book.Authors</strong></p>

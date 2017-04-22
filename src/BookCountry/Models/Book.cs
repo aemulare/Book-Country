@@ -32,6 +32,7 @@ namespace BookCountry.Models
         public DateTime CreatedAt { get; set; }
 
         public string Cover { get; set; }
+        public int? TotalPages { get; set; }
     }
 }
 

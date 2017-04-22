@@ -44,7 +44,8 @@ namespace BookCountry.Models
                                "b.price, " +
                                "b.quantity, " +
                                "b.createdAt, " +
-                               "b.cover " +
+                               "b.cover, " +
+                               "b.totalPages " +
                                "FROM books b " +
                                "INNER JOIN publishers ON b.publisherId = publishers.id " +
                                "INNER JOIN languages ON b.languageId = languages.id " +
