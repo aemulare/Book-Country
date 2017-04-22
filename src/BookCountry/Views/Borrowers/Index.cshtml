@@ -1,0 +1,37 @@
+﻿@model IEnumerable<BookCountry.Models.Borrower>
+
+<h1>This page is to show Borrowers</h1>
+<br />
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>DOB</th>
+        <th>Phone</th>
+        <th>Street address</th>
+        <th>Secondary address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip</th>
+        <th>Created at</th>
+    </tr>
+    @foreach (var borrower in Model)
+    {
+        <tr>
+            <td>@borrower.Id</td>
+            <td>@borrower.Email</td>
+            <td>@borrower.FirstName</td>
+            <td>@borrower.LastName</td>
+            <td>@borrower.Dob.ToString("MM-dd-yyyy")</td>
+            <td>@borrower.Phone</td>
+            <td>@borrower.Address.AddressLine1</td>
+            <td>@borrower.Address.AddressLine2</td>
+            <td>@borrower.Address.City</td>
+            <td>@borrower.Address.State</td>
+            <td>@borrower.Address.Zip</td>
+            <td>@borrower.CreatedAt</td>
+        </tr>
+    }
+</table>

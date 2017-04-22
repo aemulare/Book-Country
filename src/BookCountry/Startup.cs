@@ -35,6 +35,7 @@ namespace BookCountry
             services.AddApplicationInsightsTelemetry(Configuration);
             
             services.AddSingleton<IBooksRepository>(new BooksRepository(Configuration));
+            services.AddSingleton<IBorrowersRepository>(new BorrowersRepository(Configuration));
             services.AddMvc();
         }
 
