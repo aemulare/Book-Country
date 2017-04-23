@@ -11,6 +11,8 @@ create table books(
 `price` decimal(6,2),
 `quantity` int unsigned not null default 1,
 `createdAt` DATETIME not null default current_timestamp,
+`cover` nvarchar(255),
+`totalPages` int unsigned,
 
 PRIMARY KEY (`id`),
 FOREIGN KEY (`publisherId`) REFERENCES publishers(`id`),
