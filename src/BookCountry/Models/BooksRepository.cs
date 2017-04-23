@@ -33,8 +33,6 @@ namespace BookCountry.Models
                                "b.publishedOn, " +
                                "b.publisherId, " +
                                "publishers.name as Publisher, " +
-                               "languages.name as Language, " +
-                               "formats.name as Format, " +
                                "b.languageId, " +
                                "b.formatId, " +
                                "b.isbn, " +
@@ -45,15 +43,19 @@ namespace BookCountry.Models
                                "b.cover, " +
                                "b.totalPages " +
                                "FROM books b " +
-                               "INNER JOIN publishers ON b.publisherId = publishers.id " +
-                               "INNER JOIN languages ON b.languageId = languages.id " +
-                               "INNER JOIN formats ON b.formatId = formats.id";
+                               "INNER JOIN publishers ON b.publisherId = publishers.id";
 
                     connection.Open();
                     var books = connection.Query<Book>(q).ToList();
                     var authors = BooksAuthors.ToList();
+                    var languages = Languages.ToList();
+                    var formats = Formats.ToList();
                     foreach (var book in books)
+                    {
                         book.BooksAuthors = (from a in authors where a.BookId == book.Id select a).ToList();
+                        book.Language = languages.FirstOrDefault(l => l.Id == book.LanguageId);
+                        book.Format = formats.FirstOrDefault(f => f.Id == book.FormatId);
+                    }
                     return books;
                 }
             }
@@ -84,7 +86,34 @@ namespace BookCountry.Models
             }
         }
 
+        // collection of languages
+        public IEnumerable<Language> Languages
+        {
+            get
+            {
+                using (var connection = Connection)
+                {
+                    string q = "SELECT * from languages";
+                    connection.Open();
+                    return connection.Query<Language>(q);
+                }
+            }
+        }
 
+
+        // collection of book binding formats
+        public IEnumerable<Format> Formats
+        {
+            get
+            {
+                using (var connection = Connection)
+                {
+                    string q = "SELECT * from formats";
+                    connection.Open();
+                    return connection.Query<Format>(q);
+                }
+            }
+        }
 
         public void Add(Book book)
         {

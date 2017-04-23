@@ -24,24 +24,16 @@
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12" style="max-width: 200px;">
             <div class="form-group">
-                <label asp-for="Language" for="language">Language</label>
-                <select class="form-control" id="language">
-                    <option>English</option>
-                    <option>Spanish</option>
-                    <option>Russian</option>
-                    <option>French</option>
+                <label asp-for="Language.Id">Language</label>
+                <select asp-for="Language.Id" asp-items="ViewBag.Languages" class="form-control">
                 </select>
             </div>
         </div>
 
         <div class="col-lg-5 col-md-6 col-sm-12">
             <div class="form-group">
-                <label asp-for="Format" for="book-format">Format</label>
-                <select class="form-control" id="book-format" style="max-width: 150px;">
-                    <option>hardcover</option>
-                    <option>paperback</option>
-                    <option>e-book</option>
-                    <option>audiobook</option>
+                <label asp-for="Format">Format</label>
+                <select asp-for="Format.Id" asp-items="ViewBag.Formats" class="form-control" style="max-width: 150px;">
                 </select>
             </div>
         </div>

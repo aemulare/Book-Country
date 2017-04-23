@@ -6,6 +6,8 @@ namespace BookCountry.Models
     {
         IEnumerable<Book> List { get; }
         IEnumerable<BookAuthor> BooksAuthors { get; }
+        IEnumerable<Language> Languages { get; }
+        IEnumerable<Format> Formats { get; }
 
         void Add(Book book);
         void Delete(Book book);

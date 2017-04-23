@@ -9,7 +9,7 @@
                 <h4 class="card-title"><strong>@book.Title</strong></h4>
                 <p class="card-text">by <strong>@book.Authors</strong>
                 <p class="card-text"> Edition:&nbsp;<strong>@book.Edition</strong></p>
-                <p class="card-text"> Published on:&nbsp;<strong>@book.PublishedOn.ToString("MM-dd-yyyy")</strong></p>
+                <p class="card-text"> Published on:&nbsp;<strong>@book.PublishedOn.Value.ToString("MM-dd-yyyy")</strong></p>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item cover"><strong>Format:&nbsp;</strong>@book.Format</li>

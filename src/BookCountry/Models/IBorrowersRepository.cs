@@ -6,5 +6,9 @@ namespace BookCountry.Models
     {
         IEnumerable<Borrower> List { get; }
         IEnumerable<Address> Addresses { get; }
+
+        //void Add(Borrower borrower);
+        //void Delete(Borrower borrower);
+        //void Update(Borrower borrower);
     }
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using BookCountry.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 
 namespace BookCountry.Controllers
@@ -20,7 +21,14 @@ namespace BookCountry.Controllers
 
         public IActionResult Tile() => View(books.List);
 
-        public IActionResult New() => View();
+        public IActionResult New()
+        {
+           
+           ViewBag.Languages = books.Languages.Select(l => new SelectListItem { Text = l.Name, Value = l.Id.ToString() });
+           ViewBag.Formats = books.Formats.Select(f => new SelectListItem { Text = f.Name, Value = f.Id.ToString() });
+           var book = new Book();
+           return View(book);
+        } 
 
         public IActionResult Show(int bookId)
         {

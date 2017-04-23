@@ -15,15 +15,15 @@ namespace BookCountry.Models
         public string Authors => (from a in BooksAuthors select a.FullName).ToArray().Join(", ");
 
         public string Edition { get; set; }
-        public DateTime PublishedOn { get; set; }
+        public DateTime? PublishedOn { get; set; }
         public int PublisherId { get; set; }
         public string Publisher { get; set; }
 
         public int LanguageId { get; set; }
-        public string Language { get; set; }
+        public Language Language { get; set; }
 
         public int FormatId { get; set; }
-        public string Format { get; set; }
+        public Format Format { get; set; }
 
         public string Isbn { get; set; }
         public string DeweyCode { get; set; }
