@@ -2,7 +2,7 @@
 -- Query: SELECT * FROM bookcountry.authors
 LIMIT 0, 1000
 
--- Date: 2017-04-20 18:12
+-- Date: 2017-04-23 20:23
 */
 INSERT INTO `authors` (`id`,`firstName`,`middleName`,`lastName`) VALUES (1,'Sean','','Reid');
 INSERT INTO `authors` (`id`,`firstName`,`middleName`,`lastName`) VALUES (2,'Doris','','Hicks');

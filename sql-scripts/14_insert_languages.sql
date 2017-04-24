@@ -1,8 +1,8 @@
 /*
--- Query: select * from languages
+-- Query: SELECT * FROM bookcountry.languages
 LIMIT 0, 1000
 
--- Date: 2017-04-20 00:11
+-- Date: 2017-04-23 21:08
 */
 INSERT INTO `languages` (`id`,`code`,`name`) VALUES (1,'aar','Afar');
 INSERT INTO `languages` (`id`,`code`,`name`) VALUES (2,'abk','Abkhaz');
@@ -107,7 +107,7 @@ INSERT INTO `languages` (`id`,`code`,`name`) VALUES (100,'lub','Luba-Katanga');
 INSERT INTO `languages` (`id`,`code`,`name`) VALUES (101,'lav','Latvian');
 INSERT INTO `languages` (`id`,`code`,`name`) VALUES (102,'mlg','Malagasy');
 INSERT INTO `languages` (`id`,`code`,`name`) VALUES (103,'mah','Marshallese');
-INSERT INTO `languages` (`id`,`code`,`name`) VALUES (104,'mao','Māori');
+INSERT INTO `languages` (`id`,`code`,`name`) VALUES (104,'mao','Maori');
 INSERT INTO `languages` (`id`,`code`,`name`) VALUES (105,'mac','Macedonian');
 INSERT INTO `languages` (`id`,`code`,`name`) VALUES (106,'mal','Malayalam');
 INSERT INTO `languages` (`id`,`code`,`name`) VALUES (107,'mon','Mongolian');
@@ -132,7 +132,7 @@ INSERT INTO `languages` (`id`,`code`,`name`) VALUES (125,'orm','Oromo');
 INSERT INTO `languages` (`id`,`code`,`name`) VALUES (126,'ori','Oriya');
 INSERT INTO `languages` (`id`,`code`,`name`) VALUES (127,'oss','Ossetian');
 INSERT INTO `languages` (`id`,`code`,`name`) VALUES (128,'pan','Panjabi');
-INSERT INTO `languages` (`id`,`code`,`name`) VALUES (129,'pli','Pāli');
+INSERT INTO `languages` (`id`,`code`,`name`) VALUES (129,'pli','Pali');
 INSERT INTO `languages` (`id`,`code`,`name`) VALUES (130,'pol','Polish');
 INSERT INTO `languages` (`id`,`code`,`name`) VALUES (131,'pus','Pashto');
 INSERT INTO `languages` (`id`,`code`,`name`) VALUES (132,'por','Portuguese');

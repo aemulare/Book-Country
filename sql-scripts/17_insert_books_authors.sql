@@ -1,4 +1,9 @@
+/*
+-- Query: SELECT * FROM bookcountry.books_authors
+LIMIT 0, 1000
 
+-- Date: 2017-04-23 20:35
+*/
 INSERT INTO `books_authors` (`id`,`bookId`,`authorId`,`authorOrdinal`,`role`) VALUES (1,8,76,1,'author');
 INSERT INTO `books_authors` (`id`,`bookId`,`authorId`,`authorOrdinal`,`role`) VALUES (2,39,15,1,'author');
 INSERT INTO `books_authors` (`id`,`bookId`,`authorId`,`authorOrdinal`,`role`) VALUES (3,61,68,1,'author');
@@ -139,4 +144,3 @@ INSERT INTO `books_authors` (`id`,`bookId`,`authorId`,`authorOrdinal`,`role`) VA
 INSERT INTO `books_authors` (`id`,`bookId`,`authorId`,`authorOrdinal`,`role`) VALUES (138,91,92,1,'author');
 INSERT INTO `books_authors` (`id`,`bookId`,`authorId`,`authorOrdinal`,`role`) VALUES (139,92,18,1,'author');
 INSERT INTO `books_authors` (`id`,`bookId`,`authorId`,`authorOrdinal`,`role`) VALUES (140,97,37,1,'author');
-

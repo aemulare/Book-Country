@@ -6,3 +6,6 @@ create table authors(
 
 PRIMARY KEY (`id`)
 );
+
+CREATE INDEX idx_authors_lastName
+ON authors (`lastName`);

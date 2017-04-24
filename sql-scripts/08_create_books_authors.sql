@@ -9,3 +9,9 @@ PRIMARY KEY (`id`),
 FOREIGN KEY (`bookId`) REFERENCES books(`id`),
 FOREIGN KEY (`authorId`) REFERENCES authors(`id`)
 );
+
+CREATE INDEX idx_books_authors_authorId
+ON books_authors (`authorId`);
+
+CREATE INDEX idx_books_authors_bookId
+ON books_authors (`bookId`);

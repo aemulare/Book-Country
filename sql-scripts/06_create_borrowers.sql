@@ -12,3 +12,11 @@ create table borrowers(
 PRIMARY KEY (`id`),
 FOREIGN KEY (`addressId`) REFERENCES addresses (`id`)
 );
+
+
+CREATE INDEX idx_borrowers_email
+ON borrowers (`email`);
+
+CREATE INDEX idx_borrowers_lastName
+ON borrowers (`lastName`);
+
