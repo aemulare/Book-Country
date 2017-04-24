@@ -2,7 +2,8 @@ create table loans(
 `id` int unsigned not null,
 `borrowerId` int unsigned not null,
 `bookId` int unsigned not null,
-`issueDate` datetime not null,
+`reservedAt` datetime not null,
+`issueDate` datetime not null CHECK (`issueDate` > `reservedAt`),
 `returnDate` datetime not null CHECK (`returnDate` > `issueDate`),
 `returnedOn` datetime CHECK (`returnedOn` > `issueDate`),
 
