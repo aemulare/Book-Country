@@ -22,5 +22,9 @@ namespace BookCountry.Models
 
         public bool IsLibrarian { get; set; }
         public DateTime CreatedAt { get; set; }
+
+        public string PasswordDigest { get; set; }
+        public string ActivationToken { get; set; }
+        public bool Active { get; set; }
     }
 }

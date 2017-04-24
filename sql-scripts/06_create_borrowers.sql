@@ -9,6 +9,10 @@ create table borrowers(
 `isLibrarian` boolean default false,
 `createdAt` datetime not null,
 
+`passwordDigest` nvarchar(255) not null,
+`activationToken` nvarchar(255),
+`active` boolean not null default false,
+
 PRIMARY KEY (`id`),
 FOREIGN KEY (`addressId`) REFERENCES addresses (`id`)
 );

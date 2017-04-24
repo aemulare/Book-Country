@@ -34,7 +34,10 @@ namespace BookCountry.Models
                                "br.phone, " +
                                "br.addressId, " +
                                "br.isLibrarian, " +
-                               "br.createdAt " +
+                               "br.createdAt, " +
+                               "br.passwordDigest, " +
+                               "br.activationToken, " +
+                               "br.active " +
                                "FROM borrowers br";
 
                     connection.Open();
