@@ -4,8 +4,7 @@ namespace BookCountry.Models
 {
     public interface IBorrowersRepository
     {
-        IEnumerable<Borrower> List { get; }
-        IEnumerable<Address> Addresses { get; }
+        IEnumerable<Borrower> GetAll();
 
         //void Add(Borrower borrower);
         //void Delete(Borrower borrower);

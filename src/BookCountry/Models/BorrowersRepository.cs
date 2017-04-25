@@ -1,63 +1,30 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using Dapper;
 using Microsoft.Extensions.Configuration;
-using MySql.Data.MySqlClient;
 
 namespace BookCountry.Models
 {
-    public class BorrowersRepository : IBorrowersRepository
+    public class BorrowersRepository : RepositoryBase, IBorrowersRepository
     {
-        private readonly IConfigurationRoot configuration;
-
-        public BorrowersRepository(IConfigurationRoot configuration)
-        {
-            this.configuration = configuration;
-        }
-
-        public IDbConnection Connection =>
-           new MySqlConnection(configuration["Data:BookCountry:ConnectionString"]);
+        // constructor
+        public BorrowersRepository(IConfigurationRoot configuration) : base(configuration) { }
 
         // collection of books
-        public IEnumerable<Borrower> List
+        public IEnumerable<Borrower> GetAll()
         {
-            get
+            using (var connection = GetConnection())
             {
-                using (var connection = Connection)
-                {
-                    const string SQL = "SELECT * FROM borrowers as br " +
-                                 "inner join addresses as addr ON addr.id = br.addressId";
+                const string SQL = "SELECT * FROM borrowers as br " +
+                                   "INNER JOIN addresses as addr ON addr.id = br.addressId";
 
-                    connection.Open();
-                    return connection.Query<Borrower,Address,Borrower>(SQL,
-                        (borrower, address) =>
-                        {
-                            borrower.Address = address;
-                            return borrower;
-                        }).ToList();
-                }
-            }
-        }
-
-
-        // collection of authors and their books (book id)
-        public IEnumerable<Address> Addresses
-        {
-            get
-            {
-                using (var connection = Connection)
-                {
-                    string q = "SELECT id, " +
-                               "addressLine1, " +
-                               "addressLine2, " +
-                               "city, " +
-                               "state, " +
-                               "zip " +
-                               "FROM addresses";
-                    connection.Open();
-                    return connection.Query<Address>(q);
-                }
+                connection.Open();
+                return connection.Query<Borrower, Address, Borrower>(SQL,
+                    (borrower, address) =>
+                    {
+                        borrower.Address = address;
+                        return borrower;
+                    }).ToList();
             }
         }
     }
