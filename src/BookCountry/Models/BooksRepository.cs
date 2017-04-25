@@ -86,14 +86,19 @@ namespace BookCountry.Models
             }
         }
 
+
         // adds new book to the collection
         public void Add(Book book)
         {
             using (var connection = GetConnection())
             {
                 const string SQL =
-                    "insert into books(title, edition, publishedOn, publisherId, languageId, formatId, isbn, deweyCode, price, quantity, createdAt) " +
-                    "values(@Title, @Edition, @PublishedOn, @PublisherId, @LanguageId, @FormatId, @Isbn, @DeweyCode, @Price, @Quantity, @CreatedAt)";
+                    "insert into books" + 
+                    "(title, edition, publishedOn, publisherId, languageId, formatId, " +
+                    "isbn, deweyCode, price, quantity, createdAt, cover, totalPages) " +
+                    "values" +
+                    "(@Title, @Edition, @PublishedOn, @PublisherId, @LanguageId, @FormatId, " +
+                    "@Isbn, @DeweyCode, @Price, @Quantity, @CreatedAt, @Cover, @TotalPages)";
 
                 connection.Open();
                 connection.Execute(SQL, book);
@@ -101,14 +106,33 @@ namespace BookCountry.Models
         }
 
 
+        // delets book record
         public void Delete(Book book)
         {
-            
+            using (var connection = GetConnection())
+            {
+                const string SQL = "";
+
+                connection.Open();
+                connection.Execute(SQL, book);
+            }
         }
 
+
+        // updates book record
         public void Update(Book book)
         {
-            
+            using (var connection = GetConnection())
+            {
+                const string SQL =
+                    "UPDATE books" +
+                    "SET title, edition, publishedOn, publisherId, languageId, formatId, " +
+                    "isbn, deweyCode, price, quantity, createdAt, cover, totalPages" +
+                    "WHERE id =  ";
+
+                connection.Open();
+                connection.Execute(SQL, book);
+            }
         }
     }
 }

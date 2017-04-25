@@ -11,7 +11,6 @@
         <th>DOB</th>
         <th>Phone</th>
         <th>Street address</th>
-        <th>Secondary address</th>
         <th>City</th>
         <th>State</th>
         <th>Zip</th>
@@ -26,8 +25,7 @@
             <td>@borrower.LastName</td>
             <td>@borrower.Dob.ToString("MM-dd-yyyy")</td>
             <td>@borrower.Phone</td>
-            <td>@borrower.Address.AddressLine1</td>
-            <td>@borrower.Address.AddressLine2</td>
+            <td>@borrower.Address.FullStreetAddress</td>
             <td>@borrower.Address.City</td>
             <td>@borrower.Address.State</td>
             <td>@borrower.Address.Zip</td>

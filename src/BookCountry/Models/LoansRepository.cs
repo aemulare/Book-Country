@@ -9,7 +9,7 @@ namespace BookCountry.Models
         // constructor
         public LoansRepository(IConfigurationRoot configuration) : base(configuration) { }
 
-        // collection of borrowers and books (loan history)
+        // collection of borrowers, books and dates (loan history)
         public IEnumerable<Loan> GetAll()
         {
             using (var connection = GetConnection())
