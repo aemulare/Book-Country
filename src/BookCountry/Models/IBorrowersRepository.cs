@@ -6,8 +6,8 @@ namespace BookCountry.Models
     {
         IEnumerable<Borrower> GetAll();
 
-        //void Add(Borrower borrower);
-        //void Delete(Borrower borrower);
-        //void Update(Borrower borrower);
+        void Add(Borrower borrower);
+        void Delete(Borrower borrower);
+        void Update(Borrower borrower);
     }
 }

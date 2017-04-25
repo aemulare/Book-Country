@@ -27,5 +27,23 @@ namespace BookCountry.Models
                     });
             }
         }
+
+
+        public void Add(Loan loan)
+        {
+            
+        }
+
+
+        public void Delete(Loan loan)
+        {
+            
+        }
+
+
+        public void Update(Loan loan)
+        {
+            
+        }
     }
 }

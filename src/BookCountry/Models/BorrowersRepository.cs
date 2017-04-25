@@ -27,5 +27,23 @@ namespace BookCountry.Models
                     }).ToList();
             }
         }
+
+
+        public void Add(Borrower borrower)
+        {
+            
+        }
+
+
+        public void Delete(Borrower borrower)
+        {
+            
+        }
+
+
+        public void Update(Borrower borrower)
+        {
+            
+        }
     }
 }

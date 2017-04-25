@@ -7,10 +7,16 @@ namespace BookCountry.Models
 {
     public class BooksRepository : RepositoryBase, IBooksRepository
     {
-        // constructor
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="configuration"></param>
         public BooksRepository(IConfigurationRoot configuration) : base(configuration) { }
-  
-        // method - collection of books
+
+        /// <summary>
+        /// method GetAll
+        /// </summary>
+        /// <returns>collection of books</returns>
         public IEnumerable<Book> GetAll()
         {
             using (var connection = GetConnection())
@@ -39,7 +45,9 @@ namespace BookCountry.Models
         }
 
 
-        // collection of authors and their books (book id)
+        /// <summary>
+        /// property: collection of authors and their books (book id)
+        /// </summary>
         public IEnumerable<BookAuthor> BooksAuthors
         {
             get
@@ -57,7 +65,9 @@ namespace BookCountry.Models
         }
 
 
-        // collection of languages
+        /// <summary>
+        /// property: collection of languages
+        /// </summary>
         public IEnumerable<Language> Languages
         {
             get
@@ -72,7 +82,9 @@ namespace BookCountry.Models
         }
 
 
-        // collection of book formats
+        /// <summary>
+        /// property: collection of book formats
+        /// </summary>
         public IEnumerable<Format> Formats
         {
             get
@@ -87,7 +99,10 @@ namespace BookCountry.Models
         }
 
 
-        // adds new book to the collection
+        /// <summary>
+        /// method Add [new book to the collection]
+        /// </summary>
+        /// <param name="book"></param>
         public void Add(Book book)
         {
             using (var connection = GetConnection())
@@ -106,7 +121,10 @@ namespace BookCountry.Models
         }
 
 
-        // delets book record
+        /// <summary>
+        /// methord Delete [book from the collection]
+        /// </summary>
+        /// <param name="book"></param>
         public void Delete(Book book)
         {
             using (var connection = GetConnection())
@@ -119,7 +137,10 @@ namespace BookCountry.Models
         }
 
 
-        // updates book record
+        /// <summary>
+        /// method Update [book record]
+        /// </summary>
+        /// <param name="book"></param>
         public void Update(Book book)
         {
             using (var connection = GetConnection())
