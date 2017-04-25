@@ -17,9 +17,9 @@ namespace BookCountry.Controllers
         }
 
         // GET: /<controller>/
-        public IActionResult Index() => View(books.List);
+        public IActionResult Index() => View(books.GetAll());
 
-        public IActionResult Tile() => View(books.List);
+        public IActionResult Tile() => View(books.GetAll());
 
         public IActionResult New()
         {
@@ -32,7 +32,7 @@ namespace BookCountry.Controllers
 
         public IActionResult Show(int bookId)
         {
-            var book = books.List.FirstOrDefault(b => b.Id == bookId);
+            var book = books.GetAll().FirstOrDefault(b => b.Id == bookId);
             return View(book);
         }
             

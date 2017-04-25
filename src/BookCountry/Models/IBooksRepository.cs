@@ -4,7 +4,7 @@ namespace BookCountry.Models
 {
     public interface IBooksRepository
     {
-        IEnumerable<Book> List { get; }
+        IEnumerable<Book> GetAll();
         IEnumerable<BookAuthor> BooksAuthors { get; }
         IEnumerable<Language> Languages { get; }
         IEnumerable<Format> Formats { get; }

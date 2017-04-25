@@ -7,57 +7,46 @@ using MySql.Data.MySqlClient;
 
 namespace BookCountry.Models
 {
-    public class BooksRepository : IBooksRepository
+    public class BooksRepository : RepositoryBase, IBooksRepository
     {
-        private readonly IConfigurationRoot configuration;
-
-        public BooksRepository(IConfigurationRoot configuration)
+        // constructor
+        public BooksRepository(IConfigurationRoot configuration) : base(configuration) { }
+  
+        // method - collection of books
+        public IEnumerable<Book> GetAll()
         {
-            this.configuration = configuration;
-        }
-
-        public IDbConnection Connection =>
-           new MySqlConnection(configuration["Data:BookCountry:ConnectionString"]);
-
-
-        // collection of books
-        public IEnumerable<Book> List
-        {
-            get
+            using (var connection = GetConnection())
             {
-                using (var connection = Connection)
-                {
-                    string q = "SELECT b.id, " +
-                               "b.title, " +
-                               "b.edition, " +
-                               "b.publishedOn, " +
-                               "b.publisherId, " +
-                               "publishers.name as Publisher, " +
-                               "b.languageId, " +
-                               "b.formatId, " +
-                               "b.isbn, " +
-                               "b.deweyCode, " +
-                               "b.price, " +
-                               "b.quantity, " +
-                               "b.createdAt, " +
-                               "b.cover, " +
-                               "b.totalPages " +
-                               "FROM books b " +
-                               "INNER JOIN publishers ON b.publisherId = publishers.id";
+                string q = "SELECT b.id, " +
+                           "b.title, " +
+                           "b.edition, " +
+                           "b.publishedOn, " +
+                           "b.publisherId, " +
+                           "publishers.name as Publisher, " +
+                           "b.languageId, " +
+                           "b.formatId, " +
+                           "b.isbn, " +
+                           "b.deweyCode, " +
+                           "b.price, " +
+                           "b.quantity, " +
+                           "b.createdAt, " +
+                           "b.cover, " +
+                           "b.totalPages " +
+                           "FROM books b " +
+                           "INNER JOIN publishers ON b.publisherId = publishers.id";
 
-                    connection.Open();
-                    var books = connection.Query<Book>(q).ToList();
-                    var authors = BooksAuthors.ToList();
-                    var languages = Languages.ToList();
-                    var formats = Formats.ToList();
-                    foreach (var book in books)
-                    {
-                        book.BooksAuthors = (from a in authors where a.BookId == book.Id select a).ToList();
-                        book.Language = languages.FirstOrDefault(l => l.Id == book.LanguageId);
-                        book.Format = formats.FirstOrDefault(f => f.Id == book.FormatId);
-                    }
-                    return books;
+                connection.Open();
+                var books = connection.Query<Book>(q).ToList();
+                var authors = BooksAuthors.ToList();
+                var languages = Languages.ToList();
+                var formats = Formats.ToList();
+                foreach (var book in books)
+                {
+                    book.BooksAuthors = (from a in authors where a.BookId == book.Id select a).ToList();
+                    book.Language = languages.FirstOrDefault(l => l.Id == book.LanguageId);
+                    book.Format = formats.FirstOrDefault(f => f.Id == book.FormatId);
                 }
+                return books;
             }
         }
 
@@ -67,7 +56,7 @@ namespace BookCountry.Models
         {
             get
             {
-                using (var connection = Connection)
+                using (var connection = GetConnection())
                 {
                     string q = "SELECT a.id, " +
                                "a.firstName, " +
@@ -91,7 +80,7 @@ namespace BookCountry.Models
         {
             get
             {
-                using (var connection = Connection)
+                using (var connection = GetConnection())
                 {
                     string q = "SELECT * from languages";
                     connection.Open();
@@ -106,7 +95,7 @@ namespace BookCountry.Models
         {
             get
             {
-                using (var connection = Connection)
+                using (var connection = GetConnection())
                 {
                     string q = "SELECT * from formats";
                     connection.Open();
@@ -117,7 +106,7 @@ namespace BookCountry.Models
 
         public void Add(Book book)
         {
-            using (var connection = Connection)
+            using (var connection = GetConnection())
             {
                 string q =
                     "insert into books(title, edition, publishedOn, publisherId, languageId, formatId, isbn, deweyCode, price, quantity, createdAt) " +
