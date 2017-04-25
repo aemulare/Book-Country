@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BookCountry.Models
 {
@@ -17,7 +14,6 @@ namespace BookCountry.Models
         public DateTime Dob { get; set; }
 
         public string Phone { get; set; }
-        public int AddressId { get; set; }
         public Address Address { get; set; }
 
         public bool IsLibrarian { get; set; }

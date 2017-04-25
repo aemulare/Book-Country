@@ -1,0 +1,29 @@
+﻿@model IEnumerable<BookCountry.Models.Loan>
+
+<h1>This page is to show Loans</h1>
+<br />
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Borrower ID</th>
+        <th>Borrower</th>
+        <th>Book</th>
+        <th>Reserved At</th>
+        <th>Issue Date</th>
+        <th>Return Date</th>
+        <th>Returned At</th>
+    </tr>
+    @foreach (var loan in Model)
+    {
+        <tr>
+            <td>@loan.Id</td>
+            <td>@loan.Borrower.Id</td>
+            <td>@loan.Borrower.FullName</td>
+            <td>@loan.Book.Title</td>
+            <td>@loan.ReservedAt.ToString("MM-dd-yyyy hh:mm")</td>
+            <td>@loan.IssueDate.ToString("MM-dd-yyyy hh:mm")</td>
+            <td>@loan.ReturnDate.ToString("MM-dd-yyyy hh:mm")</td>
+            <td>@loan.ReturnedOn.ToString("MM-dd-yyyy hh:mm")</td> 
+        </tr>
+    }
+</table>

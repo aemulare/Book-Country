@@ -36,6 +36,7 @@ namespace BookCountry
             
             services.AddSingleton<IBooksRepository>(new BooksRepository(Configuration));
             services.AddSingleton<IBorrowersRepository>(new BorrowersRepository(Configuration));
+            services.AddSingleton<ILoansRepository>(new LoansRepository(Configuration));
             services.AddMvc();
         }
 

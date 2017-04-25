@@ -26,26 +26,16 @@ namespace BookCountry.Models
             {
                 using (var connection = Connection)
                 {
-                    string q = "SELECT br.id, " +
-                               "br.email, " +
-                               "br.firstName, " +
-                               "br.lastName, " +
-                               "br.dob, " +
-                               "br.phone, " +
-                               "br.addressId, " +
-                               "br.isLibrarian, " +
-                               "br.createdAt, " +
-                               "br.passwordDigest, " +
-                               "br.activationToken, " +
-                               "br.active " +
-                               "FROM borrowers br";
+                    const string SQL = "SELECT * FROM borrowers as br " +
+                                 "inner join addresses as addr ON addr.id = br.addressId";
 
                     connection.Open();
-                    var borrowers = connection.Query<Borrower>(q).ToList();
-                    var addresses = Addresses.ToList();
-                    foreach (var br in borrowers)
-                        br.Address = addresses.FirstOrDefault(a => a.Id == br.AddressId);
-                    return borrowers;
+                    return connection.Query<Borrower,Address,Borrower>(SQL,
+                        (borrower, address) =>
+                        {
+                            borrower.Address = address;
+                            return borrower;
+                        }).ToList();
                 }
             }
         }
