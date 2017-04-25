@@ -19,10 +19,7 @@ namespace BookCountry.Models
         public int PublisherId { get; set; }
         public string Publisher { get; set; }
 
-        public int LanguageId { get; set; }
         public Language Language { get; set; }
-
-        public int FormatId { get; set; }
         public Format Format { get; set; }
 
         public string Isbn { get; set; }
