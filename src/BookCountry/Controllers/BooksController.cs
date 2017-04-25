@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using BookCountry.Models;
+using BookCountry.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -45,11 +46,14 @@ namespace BookCountry.Controllers
         // Adds new book
         [HttpPost]
         public IActionResult Create(Book book)
-        { 
-            book.CreatedAt = DateTime.Now;
-            books.Add(book);
-            return RedirectToAction(nameof(Index));
+        {
+            if (IsbnParser.IsValid(book.Isbn))
+            {
+                book.CreatedAt = DateTime.Now;
+                books.Add(book);
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(New));
         }
-
     }
 }

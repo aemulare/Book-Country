@@ -4418,6 +4418,19 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
+      },
+      "ISBNParser/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v1.0",
+        "dependencies": {
+          "Microsoft.NETCore.App": "1.0.1"
+        },
+        "compile": {
+          "netcoreapp1.0/ISBNParser.dll": {}
+        },
+        "runtime": {
+          "netcoreapp1.0/ISBNParser.dll": {}
+        }
       }
     }
   },
@@ -11161,12 +11174,18 @@
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._"
       ]
+    },
+    "ISBNParser/1.0.0": {
+      "type": "project",
+      "path": "../ISBNParser/project.json",
+      "msbuildProject": "../ISBNParser/ISBNParser.xproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
       "Dapper >= 1.50.2",
       "Dapper.Rainbow.MySql >= 0.8.2",
+      "ISBNParser >= 1.0.0",
       "Microsoft.ApplicationInsights.AspNetCore >= 1.0.0",
       "Microsoft.AspNetCore.Diagnostics >= 1.0.0",
       "Microsoft.AspNetCore.Mvc >= 1.0.1",
