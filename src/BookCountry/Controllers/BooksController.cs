@@ -72,6 +72,7 @@ namespace BookCountry.Controllers
 
                 viewModel.Book.CreatedAt = DateTime.Now;
                 books.Save(viewModel.Book);
+                TempData["message"] = "The new book has beed saved.";
                 return RedirectToAction(nameof(Index));
             }
             //return RedirectToAction(nameof(New));

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using MySQL.Data.EntityFrameworkCore.Extensions;
 
 namespace BookCountry
 {
@@ -38,6 +37,8 @@ namespace BookCountry
             services.AddSingleton<IBorrowersRepository>(new BorrowersRepository(Configuration));
             services.AddSingleton<ILoansRepository>(new LoansRepository(Configuration));
             services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +62,7 @@ namespace BookCountry
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
