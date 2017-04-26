@@ -16,8 +16,8 @@ namespace BookCountry.Models
 
         public string Edition { get; set; }
         public DateTime? PublishedOn { get; set; }
-        public int PublisherId { get; set; }
-        public string Publisher { get; set; }
+        
+        public Publisher Publisher { get; set; }
 
         public Language Language { get; set; }
         public Format Format { get; set; }

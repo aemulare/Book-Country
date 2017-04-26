@@ -1,4 +1,4 @@
-﻿@model BookCountry.Models.Book
+﻿@model BookCountry.ViewModels.BookViewModel
 
 <form id="book" asp-action="Create" role="form" method="post">
     <br />
@@ -6,75 +6,75 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="form-group">
-                <label asp-for="Title">Title</label>
-                <input asp-for="Title" class="form-control" maxlength="255" style="max-width: 1170px;">
+                <label asp-for="Book.Title">Title</label>
+                <input asp-for="Book.Title" class="form-control" maxlength="255" style="max-width: 1170px;">
             </div>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="form-group">
-                <label >Authors</label>
-                <input type="text" class="form-control" maxlength="255" style="max-width: 1170px;">
+                <label asp-for="Authors">Authors</label>
+                <input asp-for="Authors" class="form-control" maxlength="255" style="max-width: 1170px;">
             </div>
         </div>
         <div class="col-lg-2 col-md-6 col-sm-12">
             <div class="form-group">
-                <label asp-for="Edition">Edition</label>
-                <input asp-for="Edition" class="form-control" maxlength="32" style="max-width: 300px;">
+                <label asp-for="Book.Edition">Edition</label>
+                <input asp-for="Book.Edition" class="form-control" maxlength="32" style="max-width: 300px;">
             </div>
         </div>
         <div class="col-lg-2 col-md-6 col-sm-12">
             <div class="form-group">
-                <label asp-for="PublishedOn">Published On</label>
-                <input asp-for="PublishedOn" type="date" class="form-control" maxlength="32" style="max-width: 150px;">
+                <label asp-for="Book.PublishedOn">Published On</label>
+                <input asp-for="Book.PublishedOn" type="date" class="form-control" maxlength="32" style="max-width: 150px;">
             </div>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12" style="max-width: 200px;">
             <div class="form-group">
-                <label asp-for="Language.Id">Language</label>
-                <select asp-for="Language.Id" asp-items="ViewBag.Languages" class="form-control">
+                <label asp-for="Book.Language.Id">Language</label>
+                <select asp-for="Book.Language.Id" asp-items="Model.Languages" class="form-control">
                 </select>
             </div>
         </div>
 
         <div class="col-lg-5 col-md-6 col-sm-12">
             <div class="form-group">
-                <label asp-for="Format">Format</label>
-                <select asp-for="Format.Id" asp-items="ViewBag.Formats" class="form-control" style="max-width: 150px;">
+                <label asp-for="Book.Format">Format</label>
+                <select asp-for="Book.Format.Id" asp-items="Model.Formats" class="form-control" style="max-width: 150px;">
                 </select>
             </div>
         </div>
 
         <div class="col-lg-6 col-md-6 col-sm-12">
             <div class="form-group">
-                <label asp-for="Publisher">Publisher</label>
-                <input asp-for="Publisher" class="form-control" maxlength="128">
+                <label asp-for="Book.Publisher">Publisher</label>
+                <select asp-for="Book.Publisher.Id" asp-items="Model.Publishers" class="form-control" style="max-width: 150px;"></select>
             </div>
         </div>
         
         
         <div class="col-lg-6 col-md-6 col-sm-12">
             <div class="form-group">
-                <label asp-for="Isbn">ISBN13</label>
-                <input asp-for="Isbn" class="form-control" maxlength="15" style="max-width: 150px;">
+                <label asp-for="Book.Isbn">ISBN13</label>
+                <input asp-for="Book.Isbn" class="form-control" maxlength="15" style="max-width: 150px;">
             </div>
         </div>
         
         <div class="col-lg-6 col-md-6 col-sm-12">
             <div class="form-group">
-                <label asp-for="DeweyCode">Dewey Code</label>
-                <input asp-for="DeweyCode" type="number" maxlength="256" class="form-control" style="max-width: 100px;">
+                <label asp-for="Book.DeweyCode">Dewey Code</label>
+                <input asp-for="Book.DeweyCode" type="number" maxlength="256" class="form-control" style="max-width: 100px;">
             </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
             <div class="form-group">
-                <label asp-for="Price">Price, $</label>
-                <input asp-for="Price" type="number" maxlength="8" class="form-control" style="max-width: 100px;">
+                <label asp-for="Book.Price">Price, $</label>
+                <input asp-for="Book.Price" type="number" maxlength="8" class="form-control" style="max-width: 100px;">
             </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
             <div class="form-group">
-                <label asp-for="Quantity">Quantity</label>
-                <input asp-for="Quantity" type="number" maxlength="10" class="form-control" style="max-width: 100px;">
+                <label asp-for="Book.Quantity">Quantity</label>
+                <input asp-for="Book.Quantity" type="number" maxlength="10" class="form-control" style="max-width: 100px;">
             </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">

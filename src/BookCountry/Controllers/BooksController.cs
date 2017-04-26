@@ -2,6 +2,7 @@
 using System.Linq;
 using BookCountry.Models;
 using BookCountry.Tools;
+using BookCountry.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -28,10 +29,17 @@ namespace BookCountry.Controllers
         // New book form
         public IActionResult New()
         {
-           ViewBag.Languages = books.Languages.Select(lang => new SelectListItem { Text = lang.Name, Value = lang.Id.ToString() });
-           ViewBag.Formats = books.Formats.Select(f => new SelectListItem { Text = f.Name, Value = f.Id.ToString() });
-           var book = new Book();
-           return View(book);
+            var book = new BookViewModel
+            {
+                Languages = from lang in books.Languages
+                    select new SelectListItem {Text = lang.Name, Value = lang.Id.ToString()},
+                Formats = from f in books.Formats
+                    select new SelectListItem {Text = f.Name, Value = f.Id.ToString()},
+                Publishers = from pub in books.Publishers
+                    select new SelectListItem {Text = pub.Name, Value = pub.Id.ToString()}
+            };
+
+            return View(book);
         } 
 
 
@@ -45,12 +53,15 @@ namespace BookCountry.Controllers
 
         // Adds new book
         [HttpPost]
-        public IActionResult Create(Book book)
+        public IActionResult Create(BookViewModel viewModel)
         {
-            if (IsbnParser.IsValid(book.Isbn))
+            if (IsbnParser.IsValid(viewModel.Book.Isbn))
             {
-                book.CreatedAt = DateTime.Now;
-                books.Add(book);
+
+                viewModel.Book.BooksAuthors.Add(books.BooksAuthors.First());
+
+                viewModel.Book.CreatedAt = DateTime.Now;
+                books.Add(viewModel.Book);
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(New));

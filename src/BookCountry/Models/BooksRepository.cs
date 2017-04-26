@@ -23,15 +23,17 @@ namespace BookCountry.Models
             {
                 const string SQL = "SELECT * FROM books as b " +
                            "INNER JOIN formats as f ON b.formatId = f.id " +
-                           "INNER JOIN languages as lang ON b.languageId = lang.id ";
+                           "INNER JOIN languages as lang ON b.languageId = lang.id " +
+                           "INNER JOIN publishers as pub ON b.publisherId = pub.id";
 
                 connection.Open();
 
-                var books = connection.Query<Book,Format,Language,Book>(SQL,
-                    (book, format, language) =>
+                var books = connection.Query<Book,Format,Language,Publisher,Book>(SQL,
+                    (book, format, language, publisher) =>
                     {
                         book.Format = format;
                         book.Language = language;
+                        book.Publisher = publisher;
                         return book;
                     }).ToList();
 
@@ -98,6 +100,22 @@ namespace BookCountry.Models
             }
         }
 
+
+        /// <summary>
+        /// property: collection of book publishers
+        /// </summary>
+        public IEnumerable<Publisher> Publishers
+        {
+            get
+            {
+                using (var connection = GetConnection())
+                {
+                    const string SQL = "SELECT * from publishers";
+                    connection.Open();
+                    return connection.Query<Publisher>(SQL);
+                }
+            }
+        }
 
         /// <summary>
         /// method Add [new book to the collection]
