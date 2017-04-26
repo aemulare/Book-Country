@@ -57,11 +57,15 @@ namespace BookCountry.Models
                 using (var connection = GetConnection())
                 {
                     const string SQL = "SELECT * " +
-                               "FROM authors a " +
-                               "INNER JOIN books_authors ba ON a.id = ba.authorId " +
-                               "INNER JOIN books b ON b.id = ba.bookId";
+                               "FROM authors as a " +
+                               "INNER JOIN books_authors ba ON a.id = ba.authorId ";
                     connection.Open();
-                    return connection.Query<BookAuthor>(SQL);
+                    return connection.Query<Author,BookAuthor,BookAuthor>(SQL,
+                        (author, ba) =>
+                        {
+                            ba.Author = author;
+                            return ba;
+                        });
                 }
             }
         }
@@ -116,6 +120,7 @@ namespace BookCountry.Models
                 }
             }
         }
+
 
         /// <summary>
         /// method Add [new book to the collection]

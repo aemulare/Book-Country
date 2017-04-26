@@ -12,7 +12,7 @@ namespace BookCountry.Models
 
         public List<BookAuthor> BooksAuthors { get; set; }
 
-        public string Authors => (from a in BooksAuthors select a.FullName).ToArray().Join(", ");
+        public string Authors => (from a in BooksAuthors select a.Author.FullName).ToArray().Join(", ");
 
         public string Edition { get; set; }
         public DateTime? PublishedOn { get; set; }
