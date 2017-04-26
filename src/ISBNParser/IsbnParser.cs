@@ -12,12 +12,10 @@
                 if (isbn.Contains("-")) isbn = isbn.Replace("-", "");
                 switch (isbn.Length)
                 {
-                    case 10:
-                        result = IsValidIsbn10(isbn);
-                        break;
-                    case 13:
-                        result = IsValidIsbn13(isbn);
-                        break;
+                    case 10: result = IsValidIsbn10(isbn);
+                             break;
+                    case 13: result = IsValidIsbn13(isbn);
+                             break;
                 }
             }
             return result;
@@ -30,13 +28,11 @@
             bool result = false;
             if (!string.IsNullOrEmpty(isbn10))
             {
-                if (isbn10.Contains("-")) isbn10 = isbn10.Replace("-", "");
-
                 long j;
 
-                // Length must be 10 and only the last character could be a char('X') or a numeric value,
+                // Only the last character could be a char('X') or a numeric value,
                 // otherwise it's not valid.
-                if (isbn10.Length != 10 || !long.TryParse(isbn10.Substring(0, isbn10.Length - 1), out j))
+                if (!long.TryParse(isbn10.Substring(0, isbn10.Length - 1), out j))
                     return false;
 
                 char lastChar = isbn10[isbn10.Length - 1];
@@ -55,7 +51,6 @@
                     result = (remainder == 10);
                 }
                 // Otherwise check if the lastChar is numeric
-                // Note: I'm passing sum to the TryParse method to not create a new variable again
                 else if (int.TryParse(lastChar.ToString(), out sum))
                 {
                     // lastChar is numeric, so let's compare it to remainder
@@ -73,13 +68,10 @@
 
             if (!string.IsNullOrEmpty(isbn13))
             {
-                if (isbn13.Contains("-")) isbn13 = isbn13.Replace("-", "");
-
-                // If the length is not 13 or if it contains any non numeric chars, return false
+                // If it contains any non numeric chars, return false
                 long temp;
-                if (isbn13.Length != 13 || !long.TryParse(isbn13, out temp)) return false;
+                if (!long.TryParse(isbn13, out temp)) return false;
 
-                // Comment Source: Wikipedia
                 // The calculation of an ISBN-13 check digit begins with the first
                 // 12 digits of the thirteen-digit ISBN (thus excluding the check digit itself).
                 // Each digit, from left to right, is alternately multiplied by 1 or 3,
@@ -98,7 +90,6 @@
 
                 result = (checkDigit == int.Parse(isbn13[12].ToString()));
             }
-
             return result;
         }
     }
