@@ -197,11 +197,15 @@ namespace BookCountry.Models
                         AuthorOrdinal = author.AuthorOrdinal
                     });
                 }
-
             }
         }
 
 
+        /// <summary>
+        /// method AddAuthor
+        /// </summary>
+        /// <param name="author"></param>
+        /// <param name="connection"></param>
         private void AddAuthor(Author author, IDbConnection connection)
         {
             const string SQL = "insert into authors(firstName, lastName) " +
