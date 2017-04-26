@@ -10,8 +10,11 @@ namespace BookCountry.Models
         IEnumerable<Format> Formats { get; }
         IEnumerable<Publisher> Publishers { get; }
 
-        void Add(Book book);
+        List<Author> FindAuthors(string firstName, string lastName);
+             
+        void Save(Book book);
         void Delete(Book book);
         void Update(Book book);
+        
     }
 }

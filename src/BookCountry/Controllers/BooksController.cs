@@ -57,11 +57,20 @@ namespace BookCountry.Controllers
         {
             if (IsbnParser.IsValid(viewModel.Book.Isbn))
             {
-
-                viewModel.Book.BooksAuthors.Add(books.BooksAuthors.First());
+                var authors = viewModel.Authors.Split(',');
+                var ordinal = 0;
+                foreach (var a in authors)
+                {
+                    var names = a.Split(' ');
+                    var firstName = names.FirstOrDefault();
+                    var lastName = names.Last();
+                    var author = books.FindAuthors(firstName, lastName).FirstOrDefault()
+                        ?? new Author { FirstName = firstName, LastName = lastName };
+                    viewModel.Book.BooksAuthors.Add(new BookAuthor { Author = author, AuthorOrdinal = ++ordinal });
+                }
 
                 viewModel.Book.CreatedAt = DateTime.Now;
-                books.Add(viewModel.Book);
+                books.Save(viewModel.Book);
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(New));

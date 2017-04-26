@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using Dapper;
 using Microsoft.Extensions.Configuration;
@@ -121,12 +122,36 @@ namespace BookCountry.Models
             }
         }
 
+        /// <summary>
+        /// method FindAuthors
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <returns></returns>
+        public List<Author> FindAuthors(string firstName, string lastName)
+        {
+            using (var connection = GetConnection())
+            {
+                const string SQL = "SELECT * from authors " +
+                    "WHERE firstName = @FirstName and lastName = @LastName";
+
+                connection.Open();
+                return connection.Query<Author>(SQL, 
+                    new
+                    {
+                        FirstName = firstName,
+                        LastName = lastName
+                    }).ToList();
+            }
+        }
+
+
 
         /// <summary>
-        /// method Add [new book to the collection]
+        /// method Save [new book to the collection]
         /// </summary>
         /// <param name="book"></param>
-        public void Add(Book book)
+        public void Save(Book book)
         {
             using (var connection = GetConnection())
             {
@@ -136,11 +161,58 @@ namespace BookCountry.Models
                     "isbn, deweyCode, price, quantity, createdAt, cover, totalPages) " +
                     "values" +
                     "(@Title, @Edition, @PublishedOn, @PublisherId, @LanguageId, @FormatId, " +
-                    "@Isbn, @DeweyCode, @Price, @Quantity, @CreatedAt, @Cover, @TotalPages)";
+                    "@Isbn, @DeweyCode, @Price, @Quantity, @CreatedAt, @Cover, @TotalPages); " +
+                    "select LAST_INSERT_ID();";
 
                 connection.Open();
-                connection.Execute(SQL, book);
+                book.Id = connection.Query<int>(SQL,
+                    new
+                    {
+                        Title = book.Title,
+                        Edition = book.Edition,
+                        PublishedOn = book.PublishedOn,
+                        PublisherId = book.Publisher.Id,
+                        LanguageId = book.Language.Id,
+                        FormatId = book.Format.Id,
+                        Isbn = book.Isbn,
+                        DeweyCode = book.DeweyCode,
+                        Price = book.Price,
+                        Quantity = book.Quantity,
+                        CreatedAt = book.CreatedAt,
+                        Cover = book.Cover,
+                        TotalPages = book.TotalPages
+                    }).First();
+
+                const string AUTHOR_SQL = "insert into books_authors (bookId, authorId, authorOrdinal) " +
+                    "values (@BookId, @AuthorId, @AuthorOrdinal)";
+                foreach (var author in book.BooksAuthors)
+                {
+                    if (author.Author.Id == 0)
+                        AddAuthor(author.Author, connection);
+
+                    connection.Execute(AUTHOR_SQL, new
+                    {
+                        BookId = book.Id,
+                        AuthorId = author.Author.Id,
+                        AuthorOrdinal = author.AuthorOrdinal
+                    });
+                }
+
             }
+        }
+
+
+        private void AddAuthor(Author author, IDbConnection connection)
+        {
+            const string SQL = "insert into authors(firstName, lastName) " +
+                               "values (@FirstName, @LastName); " +
+                               "select LAST_INSERT_ID();";
+            author.Id = connection.Query<int>(SQL,
+                new
+                {
+                    FirstName = author.FirstName,
+                    LastName = author.LastName
+                }).First();
         }
 
 

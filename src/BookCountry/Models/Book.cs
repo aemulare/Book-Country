@@ -6,7 +6,14 @@ using Microsoft.EntityFrameworkCore.Internal;
 namespace BookCountry.Models
 {
     public class Book
-    { 
+    {
+        public Book()
+        {
+            BooksAuthors = new List<BookAuthor>();
+        }
+
+
+         
         public int Id { get; set; }
         public string Title { get; set; }
 
