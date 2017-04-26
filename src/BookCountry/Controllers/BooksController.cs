@@ -55,7 +55,8 @@ namespace BookCountry.Controllers
         [HttpPost]
         public IActionResult Create(BookViewModel viewModel)
         {
-            if (IsbnParser.IsValid(viewModel.Book.Isbn))
+            //if (IsbnParser.IsValid(viewModel.Book.Isbn))
+            if(ModelState.IsValid)
             {
                 var authors = viewModel.Authors.Split(',');
                 var ordinal = 0;
@@ -73,7 +74,8 @@ namespace BookCountry.Controllers
                 books.Save(viewModel.Book);
                 return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(New));
+            //return RedirectToAction(nameof(New));
+            return View(nameof(New), viewModel);
         }
     }
 }

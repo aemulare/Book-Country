@@ -76,3 +76,8 @@ input, select, textarea {
    -moz-box-shadow: 0 28px 16px -26px rgba(0, 0, 0, 0.5);
    box-shadow: 0 28px 16px -26px rgba(0, 0, 0, 0.5);
 }
+
+.input-validation-error {
+    border-color: red;
+    background-color: mistyrose;
+}

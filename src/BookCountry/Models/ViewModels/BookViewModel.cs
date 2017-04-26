@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using BookCountry.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -14,6 +12,8 @@ namespace BookCountry.ViewModels
         public IEnumerable<SelectListItem> Formats { get; internal set; }
         public IEnumerable<SelectListItem> Publishers { get; internal set; }
 
+
+        [Required(ErrorMessage = "Please enter a book author(s)")]
         public string Authors { get; set; }
 
         public BookViewModel()
