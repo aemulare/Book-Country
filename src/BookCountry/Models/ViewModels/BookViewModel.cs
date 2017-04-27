@@ -13,7 +13,7 @@ namespace BookCountry.ViewModels
         public IEnumerable<SelectListItem> Publishers { get; internal set; }
 
 
-        [Required(ErrorMessage = "Please enter a book author(s)")]
+        [Required(ErrorMessage = "required")]
         public string Authors { get; set; }
 
         public BookViewModel()

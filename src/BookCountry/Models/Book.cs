@@ -15,15 +15,16 @@ namespace BookCountry.Models
   
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Please enter a book title")]
+        [Required(ErrorMessage = "required")]
         public string Title { get; set; }
 
-        
         public List<BookAuthor> BooksAuthors { get; set; }
 
         public string Authors => (from a in BooksAuthors select a.Author.FullName).ToArray().Join(", ");
 
         public string Edition { get; set; }
+
+        [Required(ErrorMessage = "?")]
         public DateTime? PublishedOn { get; set; }
         
         public Publisher Publisher { get; set; }
@@ -31,15 +32,22 @@ namespace BookCountry.Models
         public Language Language { get; set; }
         public Format Format { get; set; }
 
-        [Required(ErrorMessage = "Please enter ISBN")]
+        [Required(ErrorMessage = "required")]
         public string Isbn { get; set; }
 
+        [Required(ErrorMessage = "required")]
         public string DeweyCode { get; set; }
+
         public decimal? Price { get; set; }
+
+        [Required(ErrorMessage = "required")]
         public int? Quantity { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public string Cover { get; set; }
+
+        [Required(ErrorMessage = "required")]
         public int? TotalPages { get; set; }
     }
 }
