@@ -3,9 +3,8 @@
 @*<div class="container col-md-12">
     <div asp-validation-summary="All" class="text-danger"></div>
 </div>*@
-
-<form id="book" asp-action="Create" role="form" method="post">
-    <br />
+<h3 class="well"><strong>New Book Form</strong></h3>
+<form id="book" asp-action="Create" role="form" method="post" class="well">
     <br />
     <div class="row">
         <div class="col-lg-8">
@@ -88,14 +87,16 @@
             <div class="form-group">
                 <label asp-for="Book.TotalPages">Total pages</label>
                 <span asp-validation-for="Book.TotalPages" class="text-danger"></span>
-                <input asp-for="Book.TotalPages" type="number" maxlength="10" class="form-control" style="max-width: 120px;">
+                <input asp-for="Book.TotalPages" type="number" maxlength="10" class="form-control" style="max-width: 120px;"
+                       placeholder="400">
             </div>
         </div>
         <div class="col-lg-2">
             <div class="form-group">
                 <label asp-for="Book.Quantity">Quantity</label>
                 <span asp-validation-for="Book.Quantity" class="text-danger"></span>
-                <input asp-for="Book.Quantity" type="number" maxlength="10" class="form-control" style="max-width: 120px;">
+                <input asp-for="Book.Quantity" type="number" maxlength="10" class="form-control" style="max-width: 120px;"
+                       placeholder="10">
             </div>
         </div>
         <div class="col-lg-2">
