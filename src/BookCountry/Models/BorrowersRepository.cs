@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Dapper;
 using Microsoft.Extensions.Configuration;
@@ -17,9 +18,8 @@ namespace BookCountry.Models
             {
                 const string SQL = "SELECT * FROM borrowers as br " +
                                    "INNER JOIN addresses as addr ON addr.id = br.addressId";
-
                 connection.Open();
-                return connection.Query<Borrower, Address, Borrower>(SQL,
+                return connection.Query<Borrower,Address,Borrower>(SQL,
                     (borrower, address) =>
                     {
                         borrower.Address = address;
@@ -29,21 +29,63 @@ namespace BookCountry.Models
         }
 
 
-        public void Add(Borrower borrower)
+
+        /// <summary>
+        /// Creates a new borrower in DB.
+        /// </summary>
+        /// <param name="borrower">Borrower instance.</param>
+        public void Create(Borrower borrower)
         {
-            
+            if(borrower == null)
+                throw new ArgumentNullException(nameof(borrower));
+            const string ADDRESS_SQL =
+                "insert into addresses " +
+                "(addressLine1, addressLine2, city, state, zip) " +
+                "values (@AddressLine1, @AddressLine2, @City, @State, @Zip) " +
+                "select LAST_INSERT_ID();";
+// For SQL server:
+//                "select cast(scope_identity() as int)";
+            const string BORROWER_SQL =
+                "insert into borrowers " +
+                "(email, firstName, lastName, dob, phone, addressId, createdAt, passwordDigest, active) " +
+                "values (@Email, @FirstName, @LastName, @Dob, @Phone, @AddressId, @CreatedAt, @PasswordDigest, @Active) " +
+                "select LAST_INSERT_ID();";
+// For SQL server:
+//                "select cast(scope_identity() as int)";
+
+            using(var conn = GetConnection())
+            {
+                borrower.Address.Id = conn.Query<int>(ADDRESS_SQL, borrower.Address).First();
+                borrower.Id = conn.Query<int>(BORROWER_SQL,
+                    new
+                    {
+                        borrower.Email,
+                        borrower.FirstName,
+                        borrower.LastName,
+                        borrower.Dob,
+                        borrower.Phone,
+                        AddressId = borrower.Address.Id,
+                        borrower.CreatedAt,
+                        borrower.PasswordDigest,
+                        borrower.Active
+                    }).First();
+            }
         }
+
+
+
+        /// <summary>
+        /// Updates a borrower in DB.
+        /// </summary>
+        /// <param name="borrower">Borrower instance.</param>
+        public void Update(Borrower borrower)
+        {
+        }
+
 
 
         public void Delete(Borrower borrower)
         {
-            
-        }
-
-
-        public void Update(Borrower borrower)
-        {
-            
         }
     }
 }
