@@ -1,66 +1,62 @@
-﻿
+﻿@model Borrower
+
 <div class="container">
     <h3 class="well"><strong>Registration Form</strong></h3>
     <form id="borrower" asp-action="Create" role="form" method="post" class="well">
-        <div class="col-lg-12 well">
-            <div class="row">
-                <form>
-                    <div class="col-sm-12">
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label asp-for="Borrower.Email">Email Address</label>
-                                <input type="text" placeholder="someone@example.com" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label>First Name</label>
-                                <input type="text" placeholder="John" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label>Last Name</label>
-                                <input type="text" placeholder="Smith" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label>Street address</label>
-                                <input type="text" placeholder="125 Park Avenue" class="form-control">
-                            </div>
-                            <div class="col-sm-2 form-group">
-                                <label>apt/suit</label>
-                                <input type="apt. 8E" placeholder="" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4 form-group">
-                                <label>City</label>
-                                <input type="text" placeholder="New York" class="form-control">
-                            </div>
-                            <div class="col-lg-2 col-md-1 col-sm-1 form-group">
-                                <label>State</label>
-                                <input type="text" placeholder="NY" class="form-control">
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 form-group">
-                                <label>zip</label>
-                                <input type="text" placeholder="10007" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label>Phone Number</label>
-                                <input type="text" placeholder="7185553322" class="form-control">
-                            </div>
-                        </div>
-                        <br />
-                        <button type="button" class="btn btn-lg btn-info">Submit</button>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label asp-for="Email">Email Address</label>
+                        <input asp-for="Email" type="text" placeholder="someone@example.com" class="form-control">
                     </div>
-                </form>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label asp-for="FirstName">First Name</label>
+                        <input asp-for="FirstName "type="text" placeholder="John" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label asp-for="LastName">Last Name</label>
+                        <input asp-for="LastName" type="text" placeholder="Smith" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label asp-for="Address.AddressLine1">Street address</label>
+                        <input asp-for="Address.AddressLine1" type="text" placeholder="125 Park Avenue" class="form-control">
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <label asp-for="Address.AddressLine2">apt/suit</label>
+                        <input asp-for="Address.AddressLine2" type="text" placeholder="apt. 8E" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label asp-for="Address.City">City</label>
+                        <input asp-for="Address.City" type="text" placeholder="New York" class="form-control">
+                    </div>
+                    <div class="col-lg-2 col-md-1 col-sm-1 form-group">
+                        <label asp-for="Address.State">State</label>
+                        <input asp-for="Address.State" type="text" placeholder="NY" class="form-control">
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 form-group">
+                        <label asp-for="Address.Zip">zip</label>
+                        <input asp-for="Address.Zip"type="text" placeholder="10007" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label asp-for="Phone">Phone Number</label>
+                        <input asp-for="Phone" type="tel" placeholder="7185553322" class="form-control">
+                    </div>
+                </div>
+                <br />
+                <button type="submit" class="btn btn-lg btn-info">Submit</button>
             </div>
         </div>
     </form>
-        
 </div>

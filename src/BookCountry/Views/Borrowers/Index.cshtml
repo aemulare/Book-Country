@@ -1,8 +1,13 @@
-﻿@model IEnumerable<BookCountry.Models.Borrower>
+﻿@model IEnumerable<Borrower>
 
-<h1>This page is to show Borrowers</h1>
-<br />
-<table>
+<h1>Borrowers</h1>
+
+<div class="text-left">
+    <a asp-action="New" class="btn btn-primary">Register borrower</a>
+</div>
+<br/>
+
+<table class="table table-bordered table-responsive table-hover table-striped table-condensed">
     <tr>
         <th>ID</th>
         <th>Email</th>
@@ -33,3 +38,7 @@
         </tr>
     }
 </table>
+
+<div class="text-left">
+    <a asp-action="New" class="btn btn-primary">Register borrower</a>
+</div>
