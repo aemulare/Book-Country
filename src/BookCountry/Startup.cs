@@ -51,6 +51,7 @@ namespace BookCountry
 
             if (env.IsDevelopment())
             {
+                app.UseStatusCodePages();
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
@@ -63,7 +64,6 @@ namespace BookCountry
 
             app.UseStaticFiles();
             app.UseSession();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
