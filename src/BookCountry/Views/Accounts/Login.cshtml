@@ -1,4 +1,5 @@
 ﻿@{ Layout = null; }
+@model LoginViewModel
 
 <!DOCTYPE html>
 <html>
@@ -19,12 +20,12 @@
             <div><h1 class="logo-name">BC</h1></div>
             <h3>Welcome to Book Country</h3>
             <p>Online library catalog</p>
-            <form class="m-t" role="form" action="#">
+            <form class="m-t" role="form" method="post" asp-controller="Accounts" asp-action="Login">
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Email" required="">
+                    <input type="email" class="form-control" placeholder="Email" required="" asp-for="Email">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" required="">
+                    <input type="password" class="form-control" placeholder="Password" required="" asp-for="Password">
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 
