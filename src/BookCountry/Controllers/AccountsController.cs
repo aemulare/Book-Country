@@ -41,19 +41,21 @@ namespace BookCountry.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(LoginViewModel model, string returnUrl=null)
+        public IActionResult Login(LoginViewModel user, string returnUrl=null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             if(ModelState.IsValid)
             {
+                if(user.Email == "gwen@hvost.com" && user.Password == "hvost")
 //                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
 //                if(result.Succeeded)
                     return RedirectToLocal(returnUrl);
 
-//                ModelState.AddModelError("", "Invalid login attempt.");
-//                return View(model);
+                ModelState.AddModelError("", "Invalid login attempt.");
+                TempData["error"] = "Invalid user email or password.";
+                return View(user);
             }
-            return View(model);
+            return View(user);
         }
 
 
