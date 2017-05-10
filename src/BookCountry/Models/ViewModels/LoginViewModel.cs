@@ -5,7 +5,7 @@ namespace BookCountry.Models.ViewModels
     /// <summary>
     /// Login view model.
     /// </summary>
-    public class LoginViewModel
+    public sealed class LoginViewModel
     {
         /// <summary>
         /// Email address used as user ID.
