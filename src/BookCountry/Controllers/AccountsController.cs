@@ -1,8 +1,5 @@
-﻿using System.Threading.Tasks;
-using BookCountry.Models;
-using BookCountry.Models.ViewModels;
+﻿using BookCountry.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookCountry.Controllers
@@ -12,14 +9,15 @@ namespace BookCountry.Controllers
     /// </summary>
     public sealed class AccountsController : Controller
     {
-        private readonly UserManager<UserAccount> userManager;
-        private readonly SignInManager<UserAccount> signInManager;
+//        private readonly UserManager<UserAccount> userManager;
+//        private readonly SignInManager<UserAccount> signInManager;
 
 
-        public AccountsController(UserManager<UserAccount> userManager, SignInManager<UserAccount> signInManager)
+        public AccountsController()
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
+            // UserManager<UserAccount> userManager, SignInManager<UserAccount> signInManager
+            // this.userManager = userManager;
+            // this.signInManager = signInManager;
         }
 
 
@@ -43,19 +41,31 @@ namespace BookCountry.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl=null)
+        public IActionResult Login(LoginViewModel model, string returnUrl=null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             if(ModelState.IsValid)
             {
-                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-                if(result.Succeeded)
+//                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+//                if(result.Succeeded)
                     return RedirectToLocal(returnUrl);
 
-                ModelState.AddModelError("", "Invalid login attempt.");
-                return View(model);
+//                ModelState.AddModelError("", "Invalid login attempt.");
+//                return View(model);
             }
             return View(model);
+        }
+
+
+
+        /// <summary>
+        /// GET register action.
+        /// </summary>
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Register()
+        {
+            return View();
         }
 
 
