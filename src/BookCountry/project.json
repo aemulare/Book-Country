@@ -23,6 +23,7 @@
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "Dapper": "1.50.2",
     "Dapper.Rainbow.MySql": "0.8.2",
+    "MySql.Data.EntityFrameworkCore": "7.0.7-m61",
     "ISBNParser": "1.0.0",
     "Microsoft.AspNetCore.Session": "1.0.1",
     "Microsoft.Extensions.Caching.Memory": "1.1.0",
