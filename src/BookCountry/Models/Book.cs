@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace BookCountry.Models
 {
@@ -20,7 +19,7 @@ namespace BookCountry.Models
 
         public List<BookAuthor> BooksAuthors { get; set; }
 
-        public string Authors => (from a in BooksAuthors select a.Author.FullName).ToArray().Join(", ");
+        public string Authors => string.Join(", ", (from a in BooksAuthors select a.Author.FullName).ToArray());
 
         public string Edition { get; set; }
 
