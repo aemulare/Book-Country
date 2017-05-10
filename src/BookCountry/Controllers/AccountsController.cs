@@ -1,5 +1,11 @@
-﻿using BookCountry.Models.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using BookCountry.Models.ViewModels;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookCountry.Controllers
@@ -9,19 +15,6 @@ namespace BookCountry.Controllers
     /// </summary>
     public sealed class AccountsController : Controller
     {
-//        private readonly UserManager<UserAccount> userManager;
-//        private readonly SignInManager<UserAccount> signInManager;
-
-
-        public AccountsController()
-        {
-            // UserManager<UserAccount> userManager, SignInManager<UserAccount> signInManager
-            // this.userManager = userManager;
-            // this.signInManager = signInManager;
-        }
-
-
-
         /// <summary>
         /// GET Login action.
         /// </summary>
@@ -41,21 +34,42 @@ namespace BookCountry.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(LoginViewModel user, string returnUrl=null)
+        public async Task<IActionResult> Login(LoginViewModel user, string returnUrl=null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             if(ModelState.IsValid)
             {
                 if(user.Email == "gwen@hvost.com" && user.Password == "hvost")
-//                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-//                if(result.Succeeded)
+                {
+                    var claims = new List<Claim> { new Claim(ClaimTypes.Email, user.Email) };
+                    var props = new AuthenticationProperties
+                    {
+                        IsPersistent = true,
+                        ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(20)
+                    };
+                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    await HttpContext.Authentication.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(identity), props);
                     return RedirectToLocal(returnUrl);
+                }
 
                 ModelState.AddModelError("", "Invalid login attempt.");
                 TempData["error"] = "Invalid user email or password.";
                 return View(user);
             }
             return View(user);
+        }
+
+
+
+        /// <summary>
+        /// GET Logout action.
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToLocal(null);
         }
 
 

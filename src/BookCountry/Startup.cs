@@ -1,6 +1,8 @@
 ﻿using BookCountry.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -47,6 +49,12 @@ namespace BookCountry
 
             app.UseStaticFiles();
             app.UseSession();
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme,
+                LoginPath = new PathString("/Accounts/Login"),
+                AutomaticAuthenticate = true
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

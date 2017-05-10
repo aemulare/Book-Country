@@ -27,7 +27,7 @@
     "Microsoft.AspNetCore.Session": "1.0.1",
     "Microsoft.Extensions.Caching.Memory": "1.1.0",
     "Microsoft.AspNetCore.Http.Extensions": "1.0.1",
-    "Microsoft.AspNetCore.Identity": "1.0.1"
+    "Microsoft.AspNetCore.Authentication.Cookies": "1.0.1"
   },
 
   "tools": {
