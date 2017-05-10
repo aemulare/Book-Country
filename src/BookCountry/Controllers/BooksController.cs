@@ -69,7 +69,7 @@ namespace BookCountry.Controllers
                         ?? new Author { FirstName = firstName, LastName = lastName };
                     viewModel.Book.BooksAuthors.Add(new BookAuthor { Author = author, AuthorOrdinal = ++ordinal });
                 }
-
+                viewModel.Book.Cover = "https://unsplash.it/250/350/?random";
                 viewModel.Book.CreatedAt = DateTime.Now;
                 books.Save(viewModel.Book);
                 TempData["message"] = "The new book has beed saved.";
