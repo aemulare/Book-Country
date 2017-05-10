@@ -19,15 +19,17 @@
             <div><h1 class="logo-name">BC</h1></div>
             <h3>Register to Book Country</h3>
             <p>Online library catalog</p>
-            <form class="m-t" role="form" action="#">
+            <form class="m-t" role="form" asp-controller="Accounts" asp-action="Register">
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Email" required="">
+                    <input type="email" class="form-control" placeholder="Email" required="" asp-for="Email">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" required="">
+                    <input type="password" class="form-control" placeholder="Password" required=""
+                        asp-for="Password">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password confirmation" required="">
+                    <input type="password" class="form-control" placeholder="Password confirmation" required=""
+                        asp-for="PasswordConfirmation">
                 </div>
                 <div class="form-group">
                     <div class="checkbox"><label> <input type="checkbox"><i></i> I am a librarian </label></div>
