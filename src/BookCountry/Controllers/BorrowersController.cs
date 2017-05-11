@@ -49,6 +49,7 @@ namespace BookCountry.Controllers
                 actualBorrower.LastName = borrower.LastName;
                 actualBorrower.Dob = DateTime.Now - TimeSpan.FromDays(3560);
                 actualBorrower.Address = borrower.Address;
+                actualBorrower.Phone = borrower.Phone;
                 borrowers.Update(actualBorrower);
                 return RedirectToAction(nameof(Index));
             }
