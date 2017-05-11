@@ -62,7 +62,8 @@ namespace BookCountry.Controllers
                 var ordinal = 0;
                 foreach (var a in authors)
                 {
-                    var names = a.Split(' ');
+                    
+                    var names = a.TrimStart().Split(' ');
                     var firstName = names.FirstOrDefault();
                     var lastName = names.Last();
                     var author = books.FindAuthors(firstName, lastName).FirstOrDefault()
