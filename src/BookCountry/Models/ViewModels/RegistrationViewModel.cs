@@ -5,22 +5,8 @@ namespace BookCountry.Models.ViewModels
     /// <summary>
     /// Registration view model.
     /// </summary>
-    public sealed class RegistrationViewModel
+    public sealed class RegistrationViewModel : LoginViewModel
     {
-        /// <summary>
-        /// Email address used as user ID.
-        /// </summary>
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-
-        /// <summary>
-        /// Password.
-        /// </summary>
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
         /// <summary>
         /// Password confirmation.
         /// </summary>

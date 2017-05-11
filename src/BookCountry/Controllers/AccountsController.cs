@@ -16,7 +16,7 @@ namespace BookCountry.Controllers
     /// </summary>
     public sealed class AccountsController : Controller
     {
-        private IBorrowersRepository borrowers;
+        private readonly IBorrowersRepository borrowers;
 
 
         public AccountsController(IBorrowersRepository borrowers)
@@ -96,7 +96,7 @@ namespace BookCountry.Controllers
                 var borrower = new Borrower
                 {
                     Email = user.Email,
-                    PasswordDigest = "kva",
+                    PasswordDigest = user.Hash,
                     CreatedAt = DateTime.Now,
                     Active = true
                 };
