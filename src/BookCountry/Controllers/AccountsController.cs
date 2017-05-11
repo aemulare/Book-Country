@@ -50,7 +50,7 @@ namespace BookCountry.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if(ModelState.IsValid)
             {
-                if(user.Email == "gwen@hvost.com" && user.Password == "hvost")
+                if(IsAuthenticated(user))
                 {
                     await LoginImpl(user.Email);
                     return RedirectToLocal(returnUrl);
@@ -111,6 +111,14 @@ namespace BookCountry.Controllers
 
         private IActionResult RedirectToLocal(string returnUrl) =>
             Url.IsLocalUrl(returnUrl) ? (IActionResult)Redirect(returnUrl) : RedirectToAction(nameof(BooksController.Tile), "Books");
+
+
+
+        private bool IsAuthenticated(LoginViewModel user)
+        {
+            var borrower = borrowers.GetByEmail(user.Email);
+            return borrower != null && borrower.PasswordDigest == user.Hash;
+        }
 
 
 

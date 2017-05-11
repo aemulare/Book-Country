@@ -14,7 +14,7 @@ namespace BookCountry.Models
         // constructor
         public BorrowersRepository(IConfigurationRoot configuration) : base(configuration) { }
 
-        // collection of books
+        // collection of borrowers.
         public IEnumerable<Borrower> GetAll()
         {
             using (var connection = GetConnection())
@@ -88,6 +88,18 @@ namespace BookCountry.Models
 
         public void Delete(Borrower borrower)
         {
+        }
+
+
+
+        public Borrower GetByEmail(string email)
+        {
+            using(var connection = GetConnection())
+            {
+                const string SQL = "SELECT * FROM borrowers where email = @Email;";
+                connection.Open();
+                return connection.Query<Borrower>(SQL, new { Email = email }).FirstOrDefault();
+            }
         }
     }
 }
