@@ -5,7 +5,7 @@ create table borrowers(
 `lastName` nvarchar(64),
 `dob` date CHECK (`dob` between date '1900-01-01' and sysdate()),
 `phone` nvarchar(15),
-`addressId` int unsigned not null,
+`addressId` int unsigned,
 `isLibrarian` boolean default false,
 `createdAt` datetime not null,
 
