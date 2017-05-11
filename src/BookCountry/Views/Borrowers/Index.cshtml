@@ -28,7 +28,7 @@
             <td>@borrower.Email</td>
             <td>@borrower.FirstName</td>
             <td>@borrower.LastName</td>
-            <td>@borrower.Dob.ToString("MM-dd-yyyy")</td>
+            <td>@borrower.Dob?.ToString("MM-dd-yyyy")</td>
             <td>@borrower.Phone</td>
             <td>@borrower.Address.FullStreetAddress</td>
             <td>@borrower.Address.City</td>
