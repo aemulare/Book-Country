@@ -55,8 +55,8 @@ namespace BookCountry.Controllers
         [HttpPost]
         public IActionResult Create(BookViewModel viewModel)
         {
-            //if (IsbnParser.IsValid(viewModel.Book.Isbn))
-            if(ModelState.IsValid)
+            if (IsbnParser.IsValid(viewModel.Book.Isbn))
+                if (ModelState.IsValid)
             {
                 var authors = viewModel.Authors.Split(',');
                 var ordinal = 0;
@@ -72,10 +72,12 @@ namespace BookCountry.Controllers
                 viewModel.Book.Cover = "https://unsplash.it/250/350/?random";
                 viewModel.Book.CreatedAt = DateTime.Now;
                 books.Save(viewModel.Book);
-                TempData["message"] = "The new book has beed saved.";
+                TempData["message"] = "The new book has been saved.";
                 return RedirectToAction(nameof(Index));
             }
             //return RedirectToAction(nameof(New));
+            //TempData["message"] = "The ISBN is not valid.";
+           // ModelState.AddModelError("", "The ISBN is not valid.");
             return View(nameof(New), viewModel);
         }
     }

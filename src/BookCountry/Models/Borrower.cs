@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookCountry.Models
 {
@@ -22,11 +23,13 @@ namespace BookCountry.Models
         /// <summary>
         /// Borrower first name.
         /// </summary>
+        [Required(ErrorMessage = "required")]
         public string FirstName { get; set; }
 
         /// <summary>
         /// Borrower last name.
         /// </summary>
+        [Required(ErrorMessage = "required")]
         public string LastName { get; set; }
 
         /// <summary>
@@ -37,16 +40,19 @@ namespace BookCountry.Models
         /// <summary>
         /// Borrower date of birth.
         /// </summary>
+        [Required(ErrorMessage = "required")]
         public DateTime? Dob { get; set; }
 
         /// <summary>
         /// Borrower phone number.
         /// </summary>
+        [Required(ErrorMessage = "required")]
         public string Phone { get; set; }
 
         /// <summary>
         /// Borrower address.
         /// </summary>
+        
         public Address Address { get; set; }
 
         /// <summary>
