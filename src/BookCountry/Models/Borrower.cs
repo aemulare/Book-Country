@@ -7,8 +7,13 @@ namespace BookCountry.Models
     /// Represents a regular user in the application.
     /// Can loan books in a library.
     /// </summary>
-    public class Borrower : PersistentEntity
+    public class Borrower
     {
+        /// <summary>
+        /// Persistent entity ID.
+        /// </summary>
+        public int Id { get; set; }
+
         /// <summary>
         /// Borrower email (used as a user ID for authentiation purposes).
         /// </summary>

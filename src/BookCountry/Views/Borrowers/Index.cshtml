@@ -30,10 +30,10 @@
             <td>@borrower.LastName</td>
             <td>@borrower.Dob?.ToString("MM-dd-yyyy")</td>
             <td>@borrower.Phone</td>
-            <td>@borrower.Address.FullStreetAddress</td>
-            <td>@borrower.Address.City</td>
-            <td>@borrower.Address.State</td>
-            <td>@borrower.Address.Zip</td>
+            <td>@borrower.Address?.FullStreetAddress</td>
+            <td>@borrower.Address?.City</td>
+            <td>@borrower.Address?.State</td>
+            <td>@borrower.Address?.Zip</td>
             <td>@borrower.CreatedAt</td>
         </tr>
     }

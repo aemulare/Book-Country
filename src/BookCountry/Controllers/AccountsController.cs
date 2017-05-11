@@ -109,7 +109,7 @@ namespace BookCountry.Controllers
                 
                 borrowers.Create(borrower);
                 await LoginImpl(user.Email);
-                return RedirectToLocal(null);
+                return RedirectToAction(nameof(BorrowersController.Edit), "Borrowers", new { borrowerId = borrower.Id.ToString() });
             }
             return View(user);
         }

@@ -1,14 +1,14 @@
 ﻿@model Borrower
 
 <div class="container">
-    <h3 class="well"><strong>Registration Form</strong></h3>
-    <form id="borrower" asp-action="Create" role="form" method="post" class="well">
+    <h3 class="well"><strong>Borrower Profile</strong></h3>
+    <form id="borrower" asp-action="Update" role="form" method="post" class="well" asp-route-borrowerId="@Model.Id">
         <div class="row">
             <div class="col-sm-12">
                 <div class="row">
                     <div class="col-sm-6 form-group">
                         <label asp-for="Email">Email Address</label>
-                        <input asp-for="Email" type="text" placeholder="someone@example.com" class="form-control">
+                        <input asp-for="Email" type="text" readonly="" class="form-control">
                     </div>
                 </div>
                 <div class="row">

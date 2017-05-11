@@ -8,6 +8,6 @@
         /// <summary>
         /// Persistent entity ID.
         /// </summary>
-        public int Id { get; internal set; }
+        public int Id { get; set; }
     }
 }

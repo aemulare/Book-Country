@@ -20,7 +20,7 @@ namespace BookCountry.Models
             using (var connection = GetConnection())
             {
                 const string SQL = "SELECT * FROM borrowers as br " +
-                                   "INNER JOIN addresses as addr ON addr.id = br.addressId";
+                                   "LEFT JOIN addresses as addr ON addr.id = br.addressId";
                 connection.Open();
                 return connection.Query<Borrower,Address,Borrower>(SQL,
                     (borrower, address) =>
@@ -82,6 +82,36 @@ namespace BookCountry.Models
         /// <param name="borrower">Borrower instance.</param>
         public void Update(Borrower borrower)
         {
+            if (borrower == null)
+                throw new ArgumentNullException(nameof(borrower));
+
+            const string ADDRESS_SQL =
+                "insert into addresses " +
+                "(addressLine1, addressLine2, city, state, zip) " +
+                "values (@AddressLine1, @AddressLine2, @City, @State, @Zip); " +
+                IDENTITY_CLAUSE;
+            const string BORROWER_SQL =
+                "update borrowers " +
+                "set firstName = @FirstName, lastName = @LastName, dob = @Dob, phone = @Phone, " +
+                "addressId = @AddressId " +
+                "where id = @Id";
+
+            using (var conn = GetConnection())
+            {
+                if (borrower.Address != null)
+                    borrower.Address.Id = conn.Query<int>(ADDRESS_SQL, borrower.Address).First();
+
+                conn.Execute(BORROWER_SQL,
+                    new
+                    {
+                        borrower.Id,
+                        borrower.FirstName,
+                        borrower.LastName,
+                        borrower.Dob,
+                        borrower.Phone,
+                        AddressId = borrower.Address?.Id,
+                    });
+            }
         }
 
 
@@ -99,6 +129,17 @@ namespace BookCountry.Models
                 const string SQL = "SELECT * FROM borrowers where email = @Email;";
                 connection.Open();
                 return connection.Query<Borrower>(SQL, new { Email = email }).FirstOrDefault();
+            }
+        }
+
+
+        public Borrower GetById(int borrowerId)
+        {
+            using (var connection = GetConnection())
+            {
+                const string SQL = "SELECT * FROM borrowers where id = @BorrowerId;";
+                connection.Open();
+                return connection.Query<Borrower>(SQL, new { BorrowerId = borrowerId }).FirstOrDefault();
             }
         }
     }

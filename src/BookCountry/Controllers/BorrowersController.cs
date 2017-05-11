@@ -25,28 +25,34 @@ namespace BookCountry.Controllers
 
         /// <summary>
         /// GET new action.
-        /// Displays a form to create a new borrower
+        /// Displays a form to edit a borrower
         /// </summary>
-        public IActionResult New() => View(new Borrower());
+        public IActionResult Edit(string borrowerId)
+        {
+            var borrower = borrowers.GetById(Convert.ToInt32(borrowerId));
+            return View("Profile", borrower);
+        }
+
+
 
         /// <summary>
-        /// POST create action.
-        /// Creates a new borrower.
+        /// POST update action.
+        /// Updates a borrower.
         /// </summary>
-        /// <param name="borrower">Borrower instance.</param>
         [HttpPost]
-        public IActionResult Create(Borrower borrower)
+        public IActionResult Update(Borrower borrower, int borrowerId)
         {
             if(ModelState.IsValid)
             {
-                borrower.Dob = DateTime.Now - TimeSpan.FromDays(3560);
-                borrower.CreatedAt = DateTime.Now;
-                borrower.Active = true;
-                borrower.PasswordDigest = "KVA";
-                borrowers.Create(borrower);
+                var actualBorrower = borrowers.GetById(borrowerId);
+                actualBorrower.FirstName = borrower.FirstName;
+                actualBorrower.LastName = borrower.LastName;
+                actualBorrower.Dob = DateTime.Now - TimeSpan.FromDays(3560);
+                actualBorrower.Address = borrower.Address;
+                borrowers.Update(actualBorrower);
                 return RedirectToAction(nameof(Index));
             }
-            return View(nameof(New), borrower);
+            return View(nameof(Edit), borrower);
         }
     }
 }

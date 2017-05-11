@@ -6,6 +6,7 @@ namespace BookCountry.Models
     {
         IEnumerable<Borrower> GetAll();
         Borrower GetByEmail(string email);
+        Borrower GetById(int borrowerId);
 
         void Create(Borrower borrower);
         void Update(Borrower borrower);
