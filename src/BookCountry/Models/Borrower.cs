@@ -32,7 +32,7 @@ namespace BookCountry.Models
         /// <summary>
         /// Borrower date of birth.
         /// </summary>
-        public DateTime Dob { get; set; }
+        public DateTime? Dob { get; set; }
 
         /// <summary>
         /// Borrower phone number.

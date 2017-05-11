@@ -38,6 +38,7 @@ namespace BookCountry.Models
         {
             if(borrower == null)
                 throw new ArgumentNullException(nameof(borrower));
+
             const string ADDRESS_SQL =
                 "insert into addresses " +
                 "(addressLine1, addressLine2, city, state, zip) " +
@@ -55,7 +56,9 @@ namespace BookCountry.Models
 
             using(var conn = GetConnection())
             {
-                borrower.Address.Id = conn.Query<int>(ADDRESS_SQL, borrower.Address).First();
+                if(borrower.Address != null)
+                    borrower.Address.Id = conn.Query<int>(ADDRESS_SQL, borrower.Address).First();
+
                 borrower.Id = conn.Query<int>(BORROWER_SQL,
                     new
                     {
@@ -64,7 +67,7 @@ namespace BookCountry.Models
                         borrower.LastName,
                         borrower.Dob,
                         borrower.Phone,
-                        AddressId = borrower.Address.Id,
+                        AddressId = borrower.Address?.Id,
                         borrower.CreatedAt,
                         borrower.PasswordDigest,
                         borrower.Active

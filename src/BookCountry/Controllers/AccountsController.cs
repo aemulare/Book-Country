@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BookCountry.Models;
 using BookCountry.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -15,6 +16,16 @@ namespace BookCountry.Controllers
     /// </summary>
     public sealed class AccountsController : Controller
     {
+        private IBorrowersRepository borrowers;
+
+
+        public AccountsController(IBorrowersRepository borrowers)
+        {
+            this.borrowers = borrowers;
+        }
+
+
+
         /// <summary>
         /// GET Login action.
         /// </summary>
@@ -41,15 +52,7 @@ namespace BookCountry.Controllers
             {
                 if(user.Email == "gwen@hvost.com" && user.Password == "hvost")
                 {
-                    var claims = new List<Claim> { new Claim(ClaimTypes.Email, user.Email) };
-                    var props = new AuthenticationProperties
-                    {
-                        IsPersistent = true,
-                        ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(20)
-                    };
-                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    await HttpContext.Authentication.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                        new ClaimsPrincipal(identity), props);
+                    await LoginImpl(user.Email);
                     return RedirectToLocal(returnUrl);
                 }
 
@@ -79,14 +82,49 @@ namespace BookCountry.Controllers
         /// </summary>
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register()
+        public IActionResult Register() => View();
+
+        /// <summary>
+        /// POST register action.
+        /// </summary>
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(RegistrationViewModel user)
         {
-            return View();
+            if(ModelState.IsValid)
+            {
+                var borrower = new Borrower
+                {
+                    Email = user.Email,
+                    PasswordDigest = "kva",
+                    CreatedAt = DateTime.Now,
+                    Active = true
+                };
+                borrowers.Create(borrower);
+                await LoginImpl(user.Email);
+                return RedirectToLocal(null);
+            }
+            return View(user);
         }
 
 
 
         private IActionResult RedirectToLocal(string returnUrl) =>
             Url.IsLocalUrl(returnUrl) ? (IActionResult)Redirect(returnUrl) : RedirectToAction(nameof(BooksController.Tile), "Books");
+
+
+
+        private async Task LoginImpl(string email)
+        {
+            var claims = new List<Claim> { new Claim(ClaimTypes.Email, email) };
+            var props = new AuthenticationProperties
+            {
+                IsPersistent = true,
+                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(20)
+            };
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.Authentication.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(identity), props);
+        }
     }
 }
