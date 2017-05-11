@@ -8,6 +8,9 @@ namespace BookCountry.Models
 {
     public class BorrowersRepository : RepositoryBase, IBorrowersRepository
     {
+        private const string IDENTITY_CLAUSE = "select LAST_INSERT_ID();";
+//        private const string IDENTITY_CLAUSE = "select cast(scope_identity() as int);";
+
         // constructor
         public BorrowersRepository(IConfigurationRoot configuration) : base(configuration) { }
 
@@ -42,17 +45,13 @@ namespace BookCountry.Models
             const string ADDRESS_SQL =
                 "insert into addresses " +
                 "(addressLine1, addressLine2, city, state, zip) " +
-                "values (@AddressLine1, @AddressLine2, @City, @State, @Zip) " +
-                "select LAST_INSERT_ID();";
-// For SQL server:
-//                "select cast(scope_identity() as int)";
+                "values (@AddressLine1, @AddressLine2, @City, @State, @Zip); " +
+                IDENTITY_CLAUSE;
             const string BORROWER_SQL =
                 "insert into borrowers " +
                 "(email, firstName, lastName, dob, phone, addressId, createdAt, passwordDigest, active) " +
-                "values (@Email, @FirstName, @LastName, @Dob, @Phone, @AddressId, @CreatedAt, @PasswordDigest, @Active) " +
-                "select LAST_INSERT_ID();";
-// For SQL server:
-//                "select cast(scope_identity() as int)";
+                "values (@Email, @FirstName, @LastName, @Dob, @Phone, @AddressId, @CreatedAt, @PasswordDigest, @Active); " +
+                IDENTITY_CLAUSE;
 
             using(var conn = GetConnection())
             {
