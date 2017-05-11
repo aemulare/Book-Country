@@ -13,12 +13,10 @@ namespace BookCountry
     {
         public Startup(IHostingEnvironment env)
         {
-            var builder = new ConfigurationBuilder()
+            Configuration = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
+                .Build();
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -34,19 +32,12 @@ namespace BookCountry
             services.AddSession();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            if(env.IsDevelopment())
-            {
-                app.UseStatusCodePages();
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-
+            app.UseStatusCodePages();
+            app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
             app.UseSession();
             app.UseCookieAuthentication(new CookieAuthenticationOptions
@@ -59,7 +50,7 @@ namespace BookCountry
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Books}/{action=Tile}/{id?}");
             });
         }
     }

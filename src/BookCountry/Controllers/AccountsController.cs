@@ -87,6 +87,6 @@ namespace BookCountry.Controllers
 
 
         private IActionResult RedirectToLocal(string returnUrl) =>
-            Url.IsLocalUrl(returnUrl) ? (IActionResult)Redirect(returnUrl) : RedirectToAction(nameof(HomeController.Index), "Home");
+            Url.IsLocalUrl(returnUrl) ? (IActionResult)Redirect(returnUrl) : RedirectToAction(nameof(BooksController.Tile), "Books");
     }
 }
