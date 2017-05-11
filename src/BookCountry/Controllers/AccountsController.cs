@@ -93,6 +93,12 @@ namespace BookCountry.Controllers
         {
             if(ModelState.IsValid)
             {
+                if (borrowers.GetByEmail(user.Email) != null)
+                {
+                    ModelState.AddModelError("", "This email is already exists.");
+                    TempData["error"] = "The user with this email is already registered.";
+                    return View(user);
+                }
                 var borrower = new Borrower
                 {
                     Email = user.Email,
@@ -100,6 +106,7 @@ namespace BookCountry.Controllers
                     CreatedAt = DateTime.Now,
                     Active = true
                 };
+                
                 borrowers.Create(borrower);
                 await LoginImpl(user.Email);
                 return RedirectToLocal(null);
