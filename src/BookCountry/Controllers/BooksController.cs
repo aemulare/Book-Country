@@ -57,29 +57,30 @@ namespace BookCountry.Controllers
         {
             if (IsbnParser.IsValid(viewModel.Book.Isbn))
                 if (ModelState.IsValid)
-            {
-                var authors = viewModel.Authors.Split(',');
-                var ordinal = 0;
-                foreach (var a in authors)
                 {
+                    var authors = viewModel.Authors.Split(',');
+                    var ordinal = 0;
+                    foreach (var a in authors)
+                    {
                     
-                    var names = a.TrimStart().Split(' ');
-                    var firstName = names.FirstOrDefault();
-                    var lastName = names.Last();
-                    var author = books.FindAuthors(firstName, lastName).FirstOrDefault()
-                        ?? new Author { FirstName = firstName, LastName = lastName };
-                    viewModel.Book.BooksAuthors.Add(new BookAuthor { Author = author, AuthorOrdinal = ++ordinal });
+                        var names = a.TrimStart().Split(' ');
+                        var firstName = names.FirstOrDefault();
+                        var lastName = names.Last();
+                        var author = books.FindAuthors(firstName, lastName).FirstOrDefault()
+                            ?? new Author { FirstName = firstName, LastName = lastName };
+                        viewModel.Book.BooksAuthors.Add(new BookAuthor { Author = author, AuthorOrdinal = ++ordinal });
+                    }
+                    viewModel.Book.Cover = "https://unsplash.it/250/350/?random";
+                    viewModel.Book.CreatedAt = DateTime.Now;
+                    books.Save(viewModel.Book);
+                    TempData["message"] = "The new book has been saved.";
+                    return RedirectToAction(nameof(Index));
                 }
-                viewModel.Book.Cover = "https://unsplash.it/250/350/?random";
-                viewModel.Book.CreatedAt = DateTime.Now;
-                books.Save(viewModel.Book);
-                TempData["message"] = "The new book has been saved.";
-                return RedirectToAction(nameof(Index));
-            }
-            //return RedirectToAction(nameof(New));
-            //TempData["message"] = "The ISBN is not valid.";
-           // ModelState.AddModelError("", "The ISBN is not valid.");
-            return View(nameof(New), viewModel);
+
+            ModelState.AddModelError("", "The ISBN is not valid.");
+            TempData["error"] = "Error. The ISBN is not valid. Please try again.";
+            return RedirectToAction(nameof(New), viewModel);
+            //return View(nameof(New), viewModel);
         }
     }
 }
