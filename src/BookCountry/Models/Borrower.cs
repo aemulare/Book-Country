@@ -8,13 +8,8 @@ namespace BookCountry.Models
     /// Represents a regular user in the application.
     /// Can loan books in a library.
     /// </summary>
-    public class Borrower
+    public class Borrower : PersistentEntity
     {
-        /// <summary>
-        /// Persistent entity ID.
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// Borrower email (used as a user ID for authentiation purposes).
         /// </summary>
@@ -23,13 +18,13 @@ namespace BookCountry.Models
         /// <summary>
         /// Borrower first name.
         /// </summary>
-        [Required(ErrorMessage = "required")]
+        [Required(ErrorMessage="required")]
         public string FirstName { get; set; }
 
         /// <summary>
         /// Borrower last name.
         /// </summary>
-        [Required(ErrorMessage = "required")]
+        [Required(ErrorMessage="required")]
         public string LastName { get; set; }
 
         /// <summary>
@@ -40,13 +35,13 @@ namespace BookCountry.Models
         /// <summary>
         /// Borrower date of birth.
         /// </summary>
-        [Required(ErrorMessage = "required")]
+        [Required(ErrorMessage="required")]
         public DateTime? Dob { get; set; }
 
         /// <summary>
         /// Borrower phone number.
         /// </summary>
-        [Required(ErrorMessage = "required")]
+        [Required(ErrorMessage="required")]
         public string Phone { get; set; }
 
         /// <summary>
