@@ -1,6 +1,7 @@
 bin/
 obj/
 .vs/
+.vscode/
 Debug/
 ipch
 packages/
@@ -11,3 +12,4 @@ packages/
 lib/
 PublishProfiles/
 appsettings.json
+*.csproj
