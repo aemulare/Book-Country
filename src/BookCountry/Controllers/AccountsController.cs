@@ -106,10 +106,10 @@ namespace BookCountry.Controllers
                     CreatedAt = DateTime.Now,
                     Active = true
                 };
-                
+
                 borrowers.Create(borrower);
                 await LoginImpl(user.Email);
-                return RedirectToAction(nameof(BorrowersController.Edit), "Borrowers", new { borrowerId = borrower.Id.ToString() });
+                return RedirectToAction(nameof(BorrowersController.Edit), "Borrowers", new { borrowerId = borrower.Id });
             }
             return View(user);
         }

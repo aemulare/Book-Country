@@ -23,13 +23,15 @@ namespace BookCountry.Controllers
         /// </summary>
         public IActionResult Index() => View(borrowers.GetAll());
 
+
+
         /// <summary>
         /// GET new action.
         /// Displays a form to edit a borrower
         /// </summary>
-        public IActionResult Edit(string borrowerId)
+        public IActionResult Edit(int borrowerId)
         {
-            var borrower = borrowers.GetById(Convert.ToInt32(borrowerId));
+            var borrower = borrowers.GetById(borrowerId);
             return View("Profile", borrower);
         }
 
@@ -40,7 +42,7 @@ namespace BookCountry.Controllers
         /// Updates a borrower.
         /// </summary>
         [HttpPost]
-        public IActionResult Update(Borrower borrower, int borrowerId)
+        public IActionResult Update(int borrowerId, Borrower borrower)
         {
             if(ModelState.IsValid)
             {
