@@ -1,6 +1,6 @@
 ﻿namespace BookCountry.Models
 {
-    public class BookAuthor
+    public class BookAuthor : PersistentEntity
     {
         public int BookId { get; set; }
         public Author Author { get; set; }

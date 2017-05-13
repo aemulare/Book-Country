@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BookCountry.Models
+﻿namespace BookCountry.Models
 {
-    public class Language
+    public class Language : PersistentEntity
     {
-        public int Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
     }

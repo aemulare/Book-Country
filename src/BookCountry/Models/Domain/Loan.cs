@@ -2,9 +2,8 @@
 
 namespace BookCountry.Models
 {
-    public class Loan
+    public class Loan : PersistentEntity
     {
-        public int Id { get; set; }     
         public Borrower Borrower {get; set; }
         public Book Book { get; set; }
 

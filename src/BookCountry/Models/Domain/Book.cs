@@ -5,16 +5,15 @@ using System.Linq;
 
 namespace BookCountry.Models
 {
-    public class Book
+    public class Book : PersistentEntity
     {
         public Book()
         {
             BooksAuthors = new List<BookAuthor>();
         }
-  
-        public int Id { get; set; }
 
-        [Required(ErrorMessage = "required")]
+
+        [Required(ErrorMessage="required")]
         public string Title { get; set; }
 
         public List<BookAuthor> BooksAuthors { get; set; }
@@ -25,30 +24,28 @@ namespace BookCountry.Models
 
         [Required(ErrorMessage = "?")]
         public DateTime? PublishedOn { get; set; }
-        
+
         public Publisher Publisher { get; set; }
 
         public Language Language { get; set; }
         public Format Format { get; set; }
 
-        [Required(ErrorMessage = "required")]
+        [Required(ErrorMessage="required")]
         public string Isbn { get; set; }
 
-        [Required(ErrorMessage = "required")]
+        [Required(ErrorMessage="required")]
         public string DeweyCode { get; set; }
 
         public decimal? Price { get; set; }
 
-        [Required(ErrorMessage = "required")]
+        [Required(ErrorMessage="required")]
         public int? Quantity { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
         public string Cover { get; set; }
 
-        [Required(ErrorMessage = "required")]
+        [Required(ErrorMessage="required")]
         public int? TotalPages { get; set; }
     }
 }
-
-
