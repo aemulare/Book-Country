@@ -21,18 +21,28 @@
                 <div class="row">
                     <div class="col-sm-6 form-group">
                         <label asp-for="LastName">Last Name</label>
-                        <input asp-for="LastName" type="text" class="form-control">
+                        @if(string.IsNullOrWhiteSpace(Model.LastName))
+                        {
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                            <input asp-for="LastName" type="text" class="form-control">
+                        }
+                        else
+                        {
+                            <input asp-for="LastName" type="text" class="form-control" readonly>
+                        }
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-2 form-group">
                         <label asp-for="Dob">Date of birth</label>
+                        <span asp-validation-for=Dob class="text-danger"></span>
                         <input asp-for="Dob" type="date" class="form-control">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6 form-group">
                         <label asp-for="Address.AddressLine1">Street address</label>
+                        <span asp-validation-for="Address.AddressLine1" class="text-danger"></span>
                         <input asp-for="Address.AddressLine1" type="text" class="form-control">
                     </div>
                     <div class="col-sm-2 form-group">
@@ -43,14 +53,17 @@
                 <div class="row">
                     <div class="col-sm-4 form-group">
                         <label asp-for="Address.City">City</label>
+                        <span asp-validation-for="Address.City" class="text-danger"></span>
                         <input asp-for="Address.City" type="text" class="form-control">
                     </div>
                     <div class="col-lg-2 col-md-1 col-sm-1 form-group">
                         <label asp-for="Address.State">State</label>
+                        <span asp-validation-for="Address.State" class="text-danger"></span>
                         <input asp-for="Address.State" type="text" class="form-control">
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-2 form-group">
                         <label asp-for="Address.Zip">zip</label>
+                        <span asp-validation-for="Address.Zip" class="text-danger"></span>
                         <input asp-for="Address.Zip"type="text" class="form-control">
                     </div>
                 </div>
@@ -58,11 +71,12 @@
                 <div class="row">
                     <div class="col-sm-6 form-group">
                         <label asp-for="Phone">Phone Number</label>
+                        <span asp-validation-for="Phone" class="text-danger"></span>
                         <input asp-for="Phone" type="tel" class="form-control">
                     </div>
                 </div>
                 <br />
-                <button type="submit" class="btn btn-lg btn-info">Submit</button>
+                <button type="submit" class="btn btn-lg btn-primary">Submit</button>
             </div>
         </div>
     </form>

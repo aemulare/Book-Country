@@ -53,7 +53,7 @@ namespace BookCountry.Controllers
                 actualBorrower.Address = borrower.Address;
                 actualBorrower.Phone = borrower.Phone;
                 borrowers.Update(actualBorrower);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(BooksController.Tile), "Books");
             }
             return View(nameof(Edit), borrower);
         }

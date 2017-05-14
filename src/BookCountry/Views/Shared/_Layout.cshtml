@@ -51,7 +51,8 @@
                                 Hello @Borrowers.CurrentUser?.GreetingName<b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a asp-controller="Borrowers" asp-action="Profile">My Profile</a></li>
+                                <li><a asp-controller="Borrowers" asp-action="Edit"
+                                    asp-route-borrowerId="@Borrowers.CurrentUser.Id">My Profile</a></li>
                             </ul>
                         </li>
                         <li><a asp-controller="Accounts" asp-action="Logout">Logout</a></li>

@@ -54,10 +54,12 @@ namespace BookCountry.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if(ModelState.IsValid)
             {
-                if(IsAuthenticated(user))
+                Borrower borrower;
+                if(IsAuthenticated(user, out borrower))
                 {
                     await LoginImpl(user.Email);
-                    this.toasts.AddToastMessage("Welcome", $"Hi {user.Email}!", ToastEnums.ToastType.Success);
+                    this.toasts.AddToastMessage("Welcome", $"Hello {borrower.GreetingName}! Welcome to Book Country",
+                        ToastEnums.ToastType.Success);
                     return RedirectToLocal(returnUrl);
                 }
 
@@ -131,9 +133,9 @@ namespace BookCountry.Controllers
 
 
 
-        private bool IsAuthenticated(LoginViewModel user)
+        private bool IsAuthenticated(LoginViewModel user, out Borrower borrower)
         {
-            var borrower = borrowers.GetByEmail(user.Email);
+            borrower = borrowers.GetByEmail(user.Email);
             return borrower != null && borrower.PasswordDigest == EncriptionHelper.Sha256Hash(user.Password);
         }
 

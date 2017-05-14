@@ -13,20 +13,20 @@ namespace BookCountry.Models
         /// <summary>
         /// Borrower email (used as a user ID for authentiation purposes).
         /// </summary>
-        [Required(ErrorMessage="Email address can't be blank")]
+        [Required(ErrorMessage= "required")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         /// <summary>
         /// Borrower first name.
         /// </summary>
-        [Required(ErrorMessage="Borrower first name can't be blank")]
+        [Required(ErrorMessage="required")]
         public string FirstName { get; set; }
 
         /// <summary>
         /// Borrower last name.
         /// </summary>
-        [Required(ErrorMessage="Borrower last name can't be blank")]
+        [Required(ErrorMessage="required")]
         public string LastName { get; set; }
 
         /// <summary>
@@ -42,14 +42,14 @@ namespace BookCountry.Models
         /// <summary>
         /// Borrower date of birth.
         /// </summary>
-        [Required(ErrorMessage="Date of birth can't be blank")]
+        [Required(ErrorMessage="required")]
         [DataType(DataType.Date)]
         public DateTime? Dob { get; set; }
 
         /// <summary>
         /// Borrower phone number.
         /// </summary>
-        [Required(ErrorMessage="Phone number can't be blank")]
+        [Required(ErrorMessage="required")]
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
 

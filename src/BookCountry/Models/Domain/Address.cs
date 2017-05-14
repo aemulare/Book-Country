@@ -10,7 +10,7 @@ namespace BookCountry.Models
         /// <summary>
         /// Address line 1.
         /// </summary>
-        [Required(ErrorMessage="Address can't be blank")]
+        [Required(ErrorMessage="required")]
         public string AddressLine1 { get; set; }
 
         /// <summary>
@@ -26,20 +26,20 @@ namespace BookCountry.Models
         /// <summary>
         /// City.
         /// </summary>
-        [Required(ErrorMessage="City can't be blank")]
+        [Required(ErrorMessage="required")]
         public string City { get; set; }
 
         /// <summary>
         /// US state code.
         /// </summary>
-        [Required(ErrorMessage="US state can't be blank")]
+        [Required(ErrorMessage="required")]
         [MaxLength(2)]
         public string State { get; set; }
 
         /// <summary>
         /// ZIP code.
         /// </summary>
-        [Required(ErrorMessage="ZIP code can't be blank")]
+        [Required(ErrorMessage="required")]
         [DataType(DataType.PostalCode)]
         public string Zip { get; set; }
     }

@@ -159,9 +159,17 @@ namespace BookCountry.Models
         {
             using(var connection = GetConnection())
             {
-                const string SQL = "SELECT * FROM borrowers where email = @Email;";
+                const string SQL = "SELECT * FROM borrowers as b " +
+                    "inner join addresses as a on a.id = b.addressId " +
+                    "where b.email = @Email;";
                 connection.Open();
-                return connection.Query<Borrower>(SQL, new { Email = email }).FirstOrDefault();
+                return connection.Query<Borrower,Address,Borrower>(SQL,
+                    (borrower,address) =>
+                    {
+                        borrower.Address = address;
+                        return borrower;
+                    },
+                    new { Email = email }).FirstOrDefault();
             }
         }
 
@@ -176,9 +184,17 @@ namespace BookCountry.Models
         {
             using (var connection = GetConnection())
             {
-                const string SQL = "SELECT * FROM borrowers where id = @BorrowerId;";
+                const string SQL = "SELECT * FROM borrowers as b " +
+                    "inner join addresses as a on a.id = b.addressId " +
+                    "where b.id = @BorrowerId;";
                 connection.Open();
-                return connection.Query<Borrower>(SQL, new { BorrowerId = borrowerId }).FirstOrDefault();
+                return connection.Query<Borrower,Address,Borrower>(SQL,
+                    (borrower, address) =>
+                    {
+                        borrower.Address = address;
+                        return borrower;
+                    },
+                    new { BorrowerId = borrowerId }).FirstOrDefault();
             }
         }
     }
