@@ -5,25 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Country | @ViewData["Title"]</title>
 
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="~/css/animate.css" rel="stylesheet">
-    <link href="~/css/style.css" rel="stylesheet">
-    <link href="~/css/application.css" rel="stylesheet">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="~/css/animate.css" rel="stylesheet"/>
+    <link href="~/css/style.css" rel="stylesheet"/>
+    <link href="~/css/application.css" rel="stylesheet"/>
+    <link href="~/lib/toastr/toastr.css" rel="stylesheet"/>
 </head>
 
 <body class="gray-bg">
+    @await Component.InvokeAsync("NToastNotify.Toastr");
+
     <div class="middle-box text-center loginscreen animated fadeInDown">
-        @if(TempData["error"] != null)
-        {
-            <div class="alert alert-danger">@TempData["error"]</div>
-        }
         <div>
             <div>
-                <h1 class="logo-name"><i class="fa fa-book"></i></h1>
+                <h1 class="logo-name"><i class="fa fa-book"></i>
+                </h1>
             </div>
             @RenderBody()
-            <p class="m-t"> <small>Maria Romanova &copy; 2017</small></p>
+            <p class="m-t"> <small>Maria Romanova &copy; 2017</small>
+            </p>
         </div>
     </div>
 
@@ -32,5 +33,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script asp-src-include="lib/jquery-validation/**/jquery.validate.min.js"></script>
     <script asp-src-include="lib/jquery-validation-unobtrusive/**/*.min.js"></script>
+    <script src="~/lib/toastr/toastr.min.js"></script>
 </body>
 </html>

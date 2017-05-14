@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NToastNotify;
+using NToastNotify.Constants;
 
 namespace BookCountry
 {
@@ -27,6 +29,12 @@ namespace BookCountry
             services.AddSingleton<IBooksRepository>(new BooksRepository(Configuration));
             services.AddSingleton<IBorrowersRepository>(new BorrowersRepository(Configuration));
             services.AddSingleton<ILoansRepository>(new LoansRepository(Configuration));
+            services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
+            services.AddNToastNotify(new ToastOption
+            {
+                ProgressBar = false,
+                PositionClass = ToastPositions.TopRight
+            });
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();
