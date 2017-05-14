@@ -50,7 +50,10 @@ namespace BookCountry.Controllers
                 actualBorrower.FirstName = borrower.FirstName;
                 actualBorrower.LastName = borrower.LastName;
                 actualBorrower.Dob = DateTime.Now - TimeSpan.FromDays(3560);
+                var addressId = actualBorrower.Address?.Id;
                 actualBorrower.Address = borrower.Address;
+                if(addressId != null)
+                    actualBorrower.Address.Id = addressId.Value;
                 actualBorrower.Phone = borrower.Phone;
                 borrowers.Update(actualBorrower);
                 return RedirectToAction(nameof(BooksController.Tile), "Books");

@@ -13,6 +13,9 @@ namespace BookCountry.Models
     /// </summary>
     public class BorrowersRepository : RepositoryBase, IBorrowersRepository
     {
+        private const string BORROWERS_SQL = "SELECT * FROM borrowers as b " +
+            "LEFT JOIN addresses as a ON a.id = b.addressId";
+
         private readonly IHttpContextAccessor http;
 
 
@@ -53,10 +56,8 @@ namespace BookCountry.Models
         {
             using (var connection = GetConnection())
             {
-                const string SQL = "SELECT * FROM borrowers as br " +
-                    "LEFT JOIN addresses as addr ON addr.id = br.addressId";
                 connection.Open();
-                return connection.Query<Borrower,Address,Borrower>(SQL,
+                return connection.Query<Borrower,Address,Borrower>(BORROWERS_SQL,
                     (borrower, address) =>
                     {
                         borrower.Address = address;
@@ -76,35 +77,32 @@ namespace BookCountry.Models
             if(borrower == null)
                 throw new ArgumentNullException(nameof(borrower));
 
-            const string ADDRESS_SQL =
-                "insert into addresses " +
-                "(addressLine1, addressLine2, city, state, zip) " +
-                "values (@AddressLine1, @AddressLine2, @City, @State, @Zip); " +
-                IDENTITY_CLAUSE;
-            const string BORROWER_SQL =
-                "insert into borrowers " +
+            const string INSERT_BORROWER_SQL =
+                "INSERT INTO borrowers " +
                 "(email, firstName, lastName, dob, phone, addressId, createdAt, passwordDigest, active) " +
                 "values (@Email, @FirstName, @LastName, @Dob, @Phone, @AddressId, @CreatedAt, @PasswordDigest, @Active); " +
                 IDENTITY_CLAUSE;
 
             using(var conn = GetConnection())
             {
-                if(borrower.Address != null)
-                    borrower.Address.Id = conn.Query<int>(ADDRESS_SQL, borrower.Address).First();
-
-                borrower.Id = conn.Query<int>(BORROWER_SQL,
-                    new
-                    {
-                        borrower.Email,
-                        borrower.FirstName,
-                        borrower.LastName,
-                        borrower.Dob,
-                        borrower.Phone,
-                        AddressId = borrower.Address?.Id,
-                        borrower.CreatedAt,
-                        borrower.PasswordDigest,
-                        borrower.Active
-                    }).First();
+                conn.Open();
+                using(var trans = conn.BeginTransaction())
+                {
+                    borrower.Id = conn.Query<int>(INSERT_BORROWER_SQL,
+                        new
+                        {
+                            borrower.Email,
+                            borrower.FirstName,
+                            borrower.LastName,
+                            borrower.Dob,
+                            borrower.Phone,
+                            AddressId = borrower.Address?.Id,
+                            borrower.CreatedAt,
+                            borrower.PasswordDigest,
+                            borrower.Active
+                        }, trans).First();
+                    trans.Commit();
+                }
             }
         }
 
@@ -119,32 +117,43 @@ namespace BookCountry.Models
             if (borrower == null)
                 throw new ArgumentNullException(nameof(borrower));
 
-            const string ADDRESS_SQL =
-                "insert into addresses " +
+            const string INSERT_ADDRESS_SQL =
+                "INSERT INTO addresses " +
                 "(addressLine1, addressLine2, city, state, zip) " +
                 "values (@AddressLine1, @AddressLine2, @City, @State, @Zip); " +
                 IDENTITY_CLAUSE;
-            const string BORROWER_SQL =
-                "update borrowers " +
-                "set firstName = @FirstName, lastName = @LastName, dob = @Dob, phone = @Phone, " +
+            const string UPDATE_ADDRESS_SQL =
+                "UPDATE addresses " +
+                "SET addressLine1 = @AddressLine1, addressLine2 = @AddressLine2, city = @City, " +
+                "state = @State, zip = @Zip";
+            const string UPDATE_BORROWER_SQL =
+                "UPDATE borrowers " +
+                "SET firstName = @FirstName, lastName = @LastName, dob = @Dob, phone = @Phone, " +
                 "addressId = @AddressId " +
-                "where id = @Id";
+                "WHERE id = @Id";
 
-            using (var conn = GetConnection())
+            using(var conn = GetConnection())
             {
-                if (borrower.Address != null)
-                    borrower.Address.Id = conn.Query<int>(ADDRESS_SQL, borrower.Address).First();
-
-                conn.Execute(BORROWER_SQL,
-                    new
-                    {
-                        borrower.Id,
-                        borrower.FirstName,
-                        borrower.LastName,
-                        borrower.Dob,
-                        borrower.Phone,
-                        AddressId = borrower.Address?.Id,
-                    });
+                conn.Open();
+                using(var trans = conn.BeginTransaction())
+                {
+                    int? borrowerAddressId = null;
+                    if(borrower.Address != null && borrower.Address.Id != 0)
+                        conn.Execute(UPDATE_ADDRESS_SQL, borrower.Address, trans);
+                    else
+                        borrowerAddressId = conn.Query<int>(INSERT_ADDRESS_SQL, borrower.Address, trans).First();
+                    conn.Execute(UPDATE_BORROWER_SQL,
+                        new
+                        {
+                            borrower.Id,
+                            borrower.FirstName,
+                            borrower.LastName,
+                            borrower.Dob,
+                            borrower.Phone,
+                            AddressId = borrowerAddressId ?? borrower.Address.Id
+                        }, trans);
+                    trans.Commit();
+                }
             }
         }
 
@@ -159,12 +168,9 @@ namespace BookCountry.Models
         {
             using(var connection = GetConnection())
             {
-                const string SQL = "SELECT * FROM borrowers as b " +
-                    "inner join addresses as a on a.id = b.addressId " +
-                    "where b.email = @Email;";
                 connection.Open();
-                return connection.Query<Borrower,Address,Borrower>(SQL,
-                    (borrower,address) =>
+                return connection.Query<Borrower, Address, Borrower>(BORROWERS_SQL + " WHERE b.email = @Email;",
+                    (borrower, address) =>
                     {
                         borrower.Address = address;
                         return borrower;
@@ -184,11 +190,8 @@ namespace BookCountry.Models
         {
             using (var connection = GetConnection())
             {
-                const string SQL = "SELECT * FROM borrowers as b " +
-                    "inner join addresses as a on a.id = b.addressId " +
-                    "where b.id = @BorrowerId;";
                 connection.Open();
-                return connection.Query<Borrower,Address,Borrower>(SQL,
+                return connection.Query<Borrower,Address,Borrower>(BORROWERS_SQL + " WHERE b.id = @BorrowerId;",
                     (borrower, address) =>
                     {
                         borrower.Address = address;

@@ -9,8 +9,8 @@ namespace BookCountry.Models
         // field
         private readonly IConfigurationRoot configuration;
 
-      protected const string IDENTITY_CLAUSE = "select LAST_INSERT_ID();";
-//        protected const string IDENTITY_CLAUSE = "select cast(scope_identity() as int);";
+        // protected const string IDENTITY_CLAUSE = "select LAST_INSERT_ID();";
+        protected const string IDENTITY_CLAUSE = "select cast(scope_identity() as int);";
 
 
         // constructor

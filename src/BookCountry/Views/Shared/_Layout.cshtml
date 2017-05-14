@@ -46,13 +46,14 @@
                 <ul class="nav navbar-nav pull-right">
                     @if(User.Identity.IsAuthenticated)
                     {
+                        var currentUser = Borrowers.CurrentUser;
                         <li class="dropdown">
                             <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                                Hello @Borrowers.CurrentUser?.GreetingName<b class="caret"></b>
+                                Hello @currentUser?.GreetingName<b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a asp-controller="Borrowers" asp-action="Edit"
-                                    asp-route-borrowerId="@Borrowers.CurrentUser.Id">My Profile</a></li>
+                                    asp-route-borrowerId="@currentUser?.Id">My Profile</a></li>
                             </ul>
                         </li>
                         <li><a asp-controller="Accounts" asp-action="Logout">Logout</a></li>
