@@ -12,6 +12,7 @@ namespace BookCountry.Models.ViewModels
         /// </summary>
         [Required]
         [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage="Password confirmation mismatch")]
         public string PasswordConfirmation { get; set; }
     }
 }

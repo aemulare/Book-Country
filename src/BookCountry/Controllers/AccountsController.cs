@@ -84,6 +84,8 @@ namespace BookCountry.Controllers
         [AllowAnonymous]
         public IActionResult Register() => View();
 
+
+
         /// <summary>
         /// POST register action.
         /// </summary>
@@ -93,7 +95,7 @@ namespace BookCountry.Controllers
         {
             if(ModelState.IsValid)
             {
-                if (borrowers.GetByEmail(user.Email) != null)
+                if(borrowers.GetByEmail(user.Email) != null)
                 {
                     ModelState.AddModelError("", "This email is already exists.");
                     TempData["error"] = "The user with this email is already registered.";
