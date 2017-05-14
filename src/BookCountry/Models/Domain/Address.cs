@@ -2,22 +2,45 @@
 
 namespace BookCountry.Models
 {
-    public class Address : PersistentEntity
+    /// <summary>
+    /// Address business model.
+    /// </summary>
+    public sealed class Address : PersistentEntity
     {
-        [Required(ErrorMessage="required")]
+        /// <summary>
+        /// Address line 1.
+        /// </summary>
+        [Required(ErrorMessage="Address can't be blank")]
         public string AddressLine1 { get; set; }
 
+        /// <summary>
+        /// Address line 2.
+        /// </summary>
         public string AddressLine2 { get; set; }
 
+        /// <summary>
+        /// Full street address.
+        /// </summary>
         public string FullStreetAddress => AddressLine1 + ", " + AddressLine2;
 
-        [Required(ErrorMessage="required")]
+        /// <summary>
+        /// City.
+        /// </summary>
+        [Required(ErrorMessage="City can't be blank")]
         public string City { get; set; }
 
-        [Required(ErrorMessage="required")]
+        /// <summary>
+        /// US state code.
+        /// </summary>
+        [Required(ErrorMessage="US state can't be blank")]
+        [MaxLength(2)]
         public string State { get; set; }
 
-        [Required(ErrorMessage="required")]
+        /// <summary>
+        /// ZIP code.
+        /// </summary>
+        [Required(ErrorMessage="ZIP code can't be blank")]
+        [DataType(DataType.PostalCode)]
         public string Zip { get; set; }
     }
 }

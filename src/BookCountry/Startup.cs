@@ -21,23 +21,27 @@ namespace BookCountry
                 .Build();
         }
 
+
+
         public IConfigurationRoot Configuration { get; }
 
 
-        public void ConfigureServices(IServiceCollection services)
+
+        public void ConfigureServices(IServiceCollection svc)
         {
-            services.AddSingleton<IBooksRepository>(new BooksRepository(Configuration));
-            services.AddSingleton<IBorrowersRepository>(new BorrowersRepository(Configuration));
-            services.AddSingleton<ILoansRepository>(new LoansRepository(Configuration));
-            services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
-            services.AddNToastNotify(new ToastOption
+            svc.AddSingleton(Configuration);
+            svc.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
+            svc.AddTransient<IBooksRepository,BooksRepository>();
+            svc.AddTransient<ILoansRepository,LoansRepository>();
+            svc.AddTransient<IBorrowersRepository,BorrowersRepository>();
+            svc.AddNToastNotify(new ToastOption
             {
                 ProgressBar = false,
-                PositionClass = ToastPositions.TopRight
+                PositionClass = ToastPositions.BottomRight
             });
-            services.AddMvc();
-            services.AddMemoryCache();
-            services.AddSession();
+            svc.AddMvc();
+            svc.AddMemoryCache();
+            svc.AddSession();
         }
 
 

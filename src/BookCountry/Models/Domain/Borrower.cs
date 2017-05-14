@@ -8,23 +8,25 @@ namespace BookCountry.Models
     /// Represents a regular user in the application.
     /// Can loan books in a library.
     /// </summary>
-    public class Borrower : PersistentEntity
+    public sealed  class Borrower : PersistentEntity
     {
         /// <summary>
         /// Borrower email (used as a user ID for authentiation purposes).
         /// </summary>
+        [Required(ErrorMessage="Email address can't be blank")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         /// <summary>
         /// Borrower first name.
         /// </summary>
-        [Required(ErrorMessage="required")]
+        [Required(ErrorMessage="Borrower first name can't be blank")]
         public string FirstName { get; set; }
 
         /// <summary>
         /// Borrower last name.
         /// </summary>
-        [Required(ErrorMessage="required")]
+        [Required(ErrorMessage="Borrower last name can't be blank")]
         public string LastName { get; set; }
 
         /// <summary>
@@ -33,15 +35,22 @@ namespace BookCountry.Models
         public string FullName => FirstName + " " + LastName;
 
         /// <summary>
+        /// Borrower greeting name.
+        /// </summary>
+        public string GreetingName => string.IsNullOrWhiteSpace(FirstName) ? Email : FirstName;
+
+        /// <summary>
         /// Borrower date of birth.
         /// </summary>
-        [Required(ErrorMessage="required")]
+        [Required(ErrorMessage="Date of birth can't be blank")]
+        [DataType(DataType.Date)]
         public DateTime? Dob { get; set; }
 
         /// <summary>
         /// Borrower phone number.
         /// </summary>
-        [Required(ErrorMessage="required")]
+        [Required(ErrorMessage="Phone number can't be blank")]
+        [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
 
         /// <summary>

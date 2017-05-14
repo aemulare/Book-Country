@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Mvc.ViewFeatures
+@inject IBorrowersRepository Borrowers;
 
 <!DOCTYPE html>
 <html>
@@ -27,31 +28,38 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Books" asp-action="Tile" class="navbar-brand">BookCountry</a>
+                <a asp-controller="Books" asp-action="Tile" class="navbar-brand">BookCountry</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Books" asp-action="Tile">Library</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-controller="Books" asp-action="Tile">Library</a></li>
+                    <li><a asp-controller="Home" asp-action="About">About</a></li>
+                    <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
                     @if(User.Identity.IsAuthenticated)
                     {
-                        <li><a asp-area="" asp-controller="Books" asp-action="Index">Books</a></li>
-                        <li><a asp-area="" asp-controller="Books" asp-action="New">New Book</a></li>
-                        <li><a asp-area="" asp-controller="Borrowers" asp-action="Index">Borrowers</a></li>
-                        <li><a asp-area="" asp-controller="Loans" asp-action="Index">Loans</a></li>
-                        @*<li><a asp-area="" asp-controller="Borrowers" asp-action="Edit">Profile</a></li>*@
+                        <li><a asp-controller="Books" asp-action="Index">Books</a></li>
+                        <li><a asp-controller="Books" asp-action="New">New Book</a></li>
+                        <li><a asp-controller="Borrowers" asp-action="Index">Borrowers</a></li>
+                        <li><a asp-controller="Loans" asp-action="Index">Loans</a></li>
                     }
                 </ul>
                 <ul class="nav navbar-nav pull-right">
                     @if(User.Identity.IsAuthenticated)
                     {
-                        <li><a asp-area="" asp-controller="Accounts" asp-action="Logout">Logout</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                                Hello @Borrowers.CurrentUser?.GreetingName<b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-controller="Borrowers" asp-action="Profile">My Profile</a></li>
+                            </ul>
+                        </li>
+                        <li><a asp-controller="Accounts" asp-action="Logout">Logout</a></li>
                     }
                     else
                     {
-                        <li><a asp-area="" asp-controller="Accounts" asp-action="Login">Login</a></li>
-                        <li><a asp-area="" asp-controller="Accounts" asp-action="Register">Register</a></li>
+                        <li><a asp-controller="Accounts" asp-action="Login">Login</a></li>
+                        <li><a asp-controller="Accounts" asp-action="Register">Register</a></li>
                     }
                 </ul>
             </div>

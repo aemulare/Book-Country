@@ -1,26 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using Dapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 
 namespace BookCountry.Models
 {
+    /// <summary>
+    /// Borrowers repository.
+    /// </summary>
     public class BorrowersRepository : RepositoryBase, IBorrowersRepository
     {
-        private const string IDENTITY_CLAUSE = "select LAST_INSERT_ID();";
-//        private const string IDENTITY_CLAUSE = "select cast(scope_identity() as int);";
+        private readonly IHttpContextAccessor http;
 
-        // constructor
-        public BorrowersRepository(IConfigurationRoot configuration) : base(configuration) { }
 
-        // collection of borrowers.
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public BorrowersRepository(IConfigurationRoot configuration, IHttpContextAccessor context)
+            : base(configuration)
+        {
+            this.http = context;
+        }
+
+
+
+        /// <summary>
+        /// Returns a current authenticated user (borrower).
+        /// </summary>
+        public Borrower CurrentUser
+        {
+            get
+            {
+                var user = http.HttpContext.User;
+                if(!user.Identity.IsAuthenticated)
+                    return null;
+                var emailClaim = user.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email);
+                var email = emailClaim?.Value;
+                return email != null ? GetByEmail(email) : null;
+            }
+        }
+
+
+
+        /// <summary>
+        /// Gets all borrowers from DB.
+        /// </summary>
+        /// <returns>A collection of all borrowers.</returns>
         public IEnumerable<Borrower> GetAll()
         {
             using (var connection = GetConnection())
             {
                 const string SQL = "SELECT * FROM borrowers as br " +
-                                   "LEFT JOIN addresses as addr ON addr.id = br.addressId";
+                    "LEFT JOIN addresses as addr ON addr.id = br.addressId";
                 connection.Open();
                 return connection.Query<Borrower,Address,Borrower>(SQL,
                     (borrower, address) =>
@@ -116,12 +150,11 @@ namespace BookCountry.Models
 
 
 
-        public void Delete(Borrower borrower)
-        {
-        }
-
-
-
+        /// <summary>
+        /// Gets a borrower by email.
+        /// </summary>
+        /// <param name="email">Email address.</param>
+        /// <returns>A borrower instance, if any.</returns>
         public Borrower GetByEmail(string email)
         {
             using(var connection = GetConnection())
@@ -133,6 +166,12 @@ namespace BookCountry.Models
         }
 
 
+
+        /// <summary>
+        /// Gets a borrower by ID.
+        /// </summary>
+        /// <param name="borrowerId">Borrower ID.</param>
+        /// <returns>A borrower instance, if any.</returns>
         public Borrower GetById(int borrowerId)
         {
             using (var connection = GetConnection())
