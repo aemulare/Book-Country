@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BookCountry.Helpers;
 using BookCountry.Models;
 using BookCountry.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -97,20 +98,22 @@ namespace BookCountry.Controllers
             {
                 if(borrowers.GetByEmail(user.Email) != null)
                 {
-                    ModelState.AddModelError("", "This email is already exists.");
-                    TempData["error"] = "The user with this email is already registered.";
+                    var errorMessage = $"The email '{user.Email}' already registered";
+                    ModelState.AddModelError("", errorMessage);
+                    TempData["error"] = errorMessage;
                     return View(user);
                 }
                 var borrower = new Borrower
                 {
                     Email = user.Email,
-                    PasswordDigest = user.Hash,
+                    PasswordDigest = EncriptionHelper.Sha256Hash(user.Password),
                     CreatedAt = DateTime.Now,
                     Active = true
                 };
 
                 borrowers.Create(borrower);
                 await LoginImpl(user.Email);
+                TempData["message"] = $"Welcome '{user.Email}'! Please enter your personal info.";
                 return RedirectToAction(nameof(BorrowersController.Edit), "Borrowers", new { borrowerId = borrower.Id });
             }
             return View(user);
@@ -126,7 +129,7 @@ namespace BookCountry.Controllers
         private bool IsAuthenticated(LoginViewModel user)
         {
             var borrower = borrowers.GetByEmail(user.Email);
-            return borrower != null && borrower.PasswordDigest == user.Hash;
+            return borrower != null && borrower.PasswordDigest == EncriptionHelper.Sha256Hash(user.Password);
         }
 
 
