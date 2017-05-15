@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using BookCountry.Models;
+using BookCountry.Models.ViewModels;
 using BookCountry.Tools;
 using BookCountry.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -9,21 +10,45 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookCountry.Controllers
 {
+    /// <summary>
+    /// Books controller.
+    /// </summary>
     public class BooksController : Controller
     {
-        // field
-        private IBooksRepository books;
+        private readonly IBooksRepository books;
 
-        // constructor
+
+        /// <summary>
+        /// Constructors.
+        /// </summary>
+        /// <param name="repo">Books repository interface.</param>
         public BooksController(IBooksRepository repo)
         {
             this.books = repo;
         }
 
+
+
         // GET: /<controller>/
         public IActionResult Index() => View(books.GetAll());
 
-        public IActionResult Tile() => View(books.GetAll());
+
+        public IActionResult Tile() => View(new BookTilesViewModel(books.GetAll()));
+
+
+
+        /// <summary>
+        /// POST search action.
+        /// Performs search books operation.
+        /// </summary>
+        /// <param name="bookTiles">Book tiles view model.</param>
+        public IActionResult Search(BookTilesViewModel bookTiles)
+        {
+            var searchResult = !string.IsNullOrWhiteSpace(bookTiles.SearchTemplate)
+                ? books.Search(bookTiles.SearchTemplate) : books.GetAll();
+            return View(nameof(BooksController.Tile), new BookTilesViewModel(searchResult));
+        }
+
 
 
         // New book form
@@ -49,7 +74,8 @@ namespace BookCountry.Controllers
             var book = books.GetAll().FirstOrDefault(b => b.Id == bookId);
             return View(book);
         }
-            
+
+
 
         // Adds new book
         [HttpPost]
@@ -80,7 +106,6 @@ namespace BookCountry.Controllers
             ModelState.AddModelError("", "The ISBN is not valid.");
             TempData["error"] = "Error. The ISBN is not valid. Please try again.";
             return RedirectToAction(nameof(New), viewModel);
-            //return View(nameof(New), viewModel);
         }
     }
 }

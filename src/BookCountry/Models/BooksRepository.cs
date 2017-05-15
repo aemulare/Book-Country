@@ -8,6 +8,13 @@ namespace BookCountry.Models
 {
     public class BooksRepository : RepositoryBase, IBooksRepository
     {
+        private const string BOOKS_SQL = "SELECT * FROM books as b " +
+            "INNER JOIN formats as f ON b.formatId = f.id " +
+            "INNER JOIN languages as lang ON b.languageId = lang.id " +
+            "INNER JOIN publishers as pub ON b.publisherId = pub.id " +
+            "INNER JOIN books_authors as ba ON ba.bookId = b.id " +
+            "INNER JOIN authors as aut ON aut.id = ba.authorId";
+
         /// <summary>
         /// constructor
         /// </summary>
@@ -22,54 +29,30 @@ namespace BookCountry.Models
         {
             using (var connection = GetConnection())
             {
-                const string SQL = "SELECT * FROM books as b " +
-                           "INNER JOIN formats as f ON b.formatId = f.id " +
-                           "INNER JOIN languages as lang ON b.languageId = lang.id " +
-                           "INNER JOIN publishers as pub ON b.publisherId = pub.id";
-
                 connection.Open();
-
-                var books = connection.Query<Book,Format,Language,Publisher,Book>(SQL,
-                    (book, format, language, publisher) =>
+                var books = connection.Query<Book,Format,Language,Publisher,BookAuthor,Author,Book>(BOOKS_SQL,
+                    (book, format, language, publisher, bookAuthor, author) =>
                     {
                         book.Format = format;
                         book.Language = language;
                         book.Publisher = publisher;
+                        bookAuthor.Author = author;
+                        book.BooksAuthors.Add(bookAuthor);
                         return book;
-                    }).ToList();
+                    })
+                    .GroupBy(book => book.Id)
+                    .Select(group =>
+                    {
+                        var combinedBook = group.First();
+                        combinedBook.BooksAuthors = group.Select(book => book.BooksAuthors.Single()).ToList();
+                        return combinedBook;
+                    })
+                    .ToList();
 
-                var authors = BooksAuthors.ToList();
-                foreach (var book in books)
-                {
-                    book.BooksAuthors = (from a in authors where a.BookId == book.Id select a).ToList();
-                }
                 return books;
             }
         }
 
-
-        /// <summary>
-        /// property: collection of authors and their books (book id)
-        /// </summary>
-        public IEnumerable<BookAuthor> BooksAuthors
-        {
-            get
-            {
-                using (var connection = GetConnection())
-                {
-                    const string SQL = "SELECT * " +
-                               "FROM authors as a " +
-                               "INNER JOIN books_authors ba ON a.id = ba.authorId ";
-                    connection.Open();
-                    return connection.Query<Author,BookAuthor,BookAuthor>(SQL,
-                        (author, ba) =>
-                        {
-                            ba.Author = author;
-                            return ba;
-                        });
-                }
-            }
-        }
 
 
         /// <summary>
@@ -87,6 +70,7 @@ namespace BookCountry.Models
                 }
             }
         }
+
 
 
         /// <summary>
@@ -121,6 +105,8 @@ namespace BookCountry.Models
                 }
             }
         }
+
+
 
         /// <summary>
         /// method FindAuthors
@@ -168,19 +154,19 @@ namespace BookCountry.Models
                 book.Id = connection.Query<int>(SQL,
                     new
                     {
-                        Title = book.Title,
-                        Edition = book.Edition,
-                        PublishedOn = book.PublishedOn,
+                        book.Title,
+                        book.Edition,
+                        book.PublishedOn,
                         PublisherId = book.Publisher.Id,
                         LanguageId = book.Language.Id,
                         FormatId = book.Format.Id,
-                        Isbn = book.Isbn,
-                        DeweyCode = book.DeweyCode,
-                        Price = book.Price,
-                        Quantity = book.Quantity,
-                        CreatedAt = book.CreatedAt,
-                        Cover = book.Cover,
-                        TotalPages = book.TotalPages
+                        book.Isbn,
+                        book.DeweyCode,
+                        book.Price,
+                        book.Quantity,
+                        book.CreatedAt,
+                        book.Cover,
+                        book.TotalPages
                     }).First();
 
                 const string AUTHOR_SQL = "insert into books_authors (bookId, authorId, authorOrdinal) " +
@@ -194,7 +180,7 @@ namespace BookCountry.Models
                     {
                         BookId = book.Id,
                         AuthorId = author.Author.Id,
-                        AuthorOrdinal = author.AuthorOrdinal
+                        author.AuthorOrdinal
                     });
                 }
             }
@@ -208,32 +194,18 @@ namespace BookCountry.Models
         /// <param name="connection"></param>
         private void AddAuthor(Author author, IDbConnection connection)
         {
-            const string SQL = "insert into authors(firstName, lastName) " +
+            const string SQL = "INSERT into authors(firstName, lastName) " +
                                "values (@FirstName, @LastName); " +
                                "select LAST_INSERT_ID();";
             author.Id = connection.Query<int>(SQL,
                 new
                 {
-                    FirstName = author.FirstName,
-                    LastName = author.LastName
+                    author.FirstName,
+                    author.LastName
                 }).First();
         }
 
 
-        /// <summary>
-        /// methord Delete [book from the collection]
-        /// </summary>
-        /// <param name="book"></param>
-        public void Delete(Book book)
-        {
-            using (var connection = GetConnection())
-            {
-                const string SQL = "";
-
-                connection.Open();
-                connection.Execute(SQL, book);
-            }
-        }
 
 
         /// <summary>
@@ -252,6 +224,55 @@ namespace BookCountry.Models
 
                 connection.Open();
                 connection.Execute(SQL, book);
+            }
+        }
+
+
+
+        /// <summary>
+        /// Performs books search.
+        /// </summary>
+        /// <param name="searchTemplate">Search template string.</param>
+        /// <returns>A collection of found books.</returns>
+        public IEnumerable<Book> Search(string searchTemplate)
+        {
+            const string BOOKS_SEARCH_SQL = BOOKS_SQL + " WHERE " +
+                "b.title like @SearchTemplate OR aut.lastName = @Author OR " +
+                "b.isbn = @Isbn OR b.deweyCode like @DeweyCode OR " +
+                "lang.name = @Language";
+
+            var text = searchTemplate.Trim();
+            using(var connection = GetConnection())
+            {
+                connection.Open();
+                var books = connection.Query<Book,Format,Language,Publisher,BookAuthor,Author,Book>(BOOKS_SEARCH_SQL,
+                    (book, format, language, publisher, bookAuthor, author) =>
+                    {
+                        book.Format = format;
+                        book.Language = language;
+                        book.Publisher = publisher;
+                        bookAuthor.Author = author;
+                        book.BooksAuthors.Add(bookAuthor);
+                        return book;
+                    },
+                    new
+                    {
+                        SearchTemplate = $"%{text}%",
+                        Author = text,
+                        Isbn = text,
+                        DeweyCode = $"{text}%",
+                        Language = text
+                    })
+                    .GroupBy(book => book.Id)
+                    .Select(group =>
+                    {
+                        var combinedBook = group.First();
+                        combinedBook.BooksAuthors = group.Select(book => book.BooksAuthors.Single()).ToList();
+                        return combinedBook;
+                    })
+                    .ToList();
+
+                return books;
             }
         }
     }
