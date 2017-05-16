@@ -37,7 +37,7 @@ namespace BookCountry
             svc.AddNToastNotify(new ToastOption
             {
                 ProgressBar = false,
-                PositionClass = ToastPositions.TopRight
+                PositionClass = ToastPositions.TopCenter
             });
             svc.AddMvc();
             svc.AddMemoryCache();
