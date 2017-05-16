@@ -16,6 +16,7 @@ namespace BookCountry.Controllers
     /// <summary>
     /// User accounts controller.
     /// </summary>
+    [Authorize]
     public sealed class AccountsController : Controller
     {
         private readonly IBorrowersRepository borrowers;

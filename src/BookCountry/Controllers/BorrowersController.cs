@@ -1,9 +1,11 @@
 ﻿using System;
 using BookCountry.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookCountry.Controllers
 {
+    [Authorize]
     public class BorrowersController : Controller
     {
         // field

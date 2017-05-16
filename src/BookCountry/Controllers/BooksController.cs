@@ -4,35 +4,34 @@ using BookCountry.Models;
 using BookCountry.Models.ViewModels;
 using BookCountry.Tools;
 using BookCountry.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
 
 namespace BookCountry.Controllers
 {
     /// <summary>
     /// Books controller.
     /// </summary>
+    [Authorize]
     public class BooksController : Controller
     {
         private readonly IBooksRepository books;
+        private readonly IBorrowersRepository borrowers;
 
 
         /// <summary>
         /// Constructors.
         /// </summary>
-        /// <param name="repo">Books repository interface.</param>
-        public BooksController(IBooksRepository repo)
+        public BooksController(IBooksRepository repo, IBorrowersRepository borrowers)
         {
             this.books = repo;
+            this.borrowers = borrowers;
         }
 
 
 
-        // GET: /<controller>/
-        public IActionResult Index() => View(books.GetAll());
-
-
+        [AllowAnonymous]
         public IActionResult Tile() => View(new BookTilesViewModel(books.GetAll()));
 
 
@@ -42,6 +41,7 @@ namespace BookCountry.Controllers
         /// Performs search books operation.
         /// </summary>
         /// <param name="bookTiles">Book tiles view model.</param>
+        [AllowAnonymous]
         public IActionResult Search(BookTilesViewModel bookTiles)
         {
             var searchResult = !string.IsNullOrWhiteSpace(bookTiles.SearchTemplate)
@@ -54,21 +54,25 @@ namespace BookCountry.Controllers
         // New book form
         public IActionResult New()
         {
+            if(!borrowers.CurrentUser.IsLibrarian)
+                return Redirect("~/403.html");
+
             var book = new BookViewModel
             {
                 Languages = from lang in books.Languages
-                    select new SelectListItem {Text = lang.Name, Value = lang.Id.ToString()},
+                    select new SelectListItem { Text = lang.Name, Value = lang.Id.ToString() },
                 Formats = from f in books.Formats
-                    select new SelectListItem {Text = f.Name, Value = f.Id.ToString()},
+                    select new SelectListItem { Text = f.Name, Value = f.Id.ToString() },
                 Publishers = from pub in books.Publishers
-                    select new SelectListItem {Text = pub.Name, Value = pub.Id.ToString()}
+                    select new SelectListItem { Text = pub.Name, Value = pub.Id.ToString() }
             };
-
             return View(book);
-        } 
+        }
+
 
 
         // Book details view
+        [AllowAnonymous]
         public IActionResult Show(int bookId)
         {
             var book = books.GetAll().FirstOrDefault(b => b.Id == bookId);
@@ -81,7 +85,10 @@ namespace BookCountry.Controllers
         [HttpPost]
         public IActionResult Create(BookViewModel viewModel)
         {
-            if (IsbnParser.IsValid(viewModel.Book.Isbn))
+            if(!borrowers.CurrentUser.IsLibrarian)
+                return Redirect("~/403.html");
+
+            if(IsbnParser.IsValid(viewModel.Book.Isbn))
                 if (ModelState.IsValid)
                 {
                     var authors = viewModel.Authors.Split(',');
@@ -100,7 +107,7 @@ namespace BookCountry.Controllers
                     viewModel.Book.CreatedAt = DateTime.Now;
                     books.Save(viewModel.Book);
                     TempData["message"] = "The new book has been saved.";
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Tile));
                 }
 
             ModelState.AddModelError("", "The ISBN is not valid.");

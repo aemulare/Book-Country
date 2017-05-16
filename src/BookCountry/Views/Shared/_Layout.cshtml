@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Mvc.ViewFeatures
+
 @inject IBorrowersRepository Borrowers;
+@{ var currentUser = Borrowers.CurrentUser; }
 
 <!DOCTYPE html>
 <html>
@@ -35,18 +37,16 @@
                     <li><a asp-controller="Books" asp-action="Tile">Library</a></li>
                     <li><a asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    @if(User.Identity.IsAuthenticated)
+                    @if(User.Identity.IsAuthenticated && currentUser.IsLibrarian)
                     {
-                        <li><a asp-controller="Books" asp-action="Index">Books</a></li>
-                        <li><a asp-controller="Books" asp-action="New">New Book</a></li>
                         <li><a asp-controller="Borrowers" asp-action="Index">Borrowers</a></li>
+                        <li><a asp-controller="Books" asp-action="New">New Book</a></li>
                         <li><a asp-controller="Loans" asp-action="Index">Loans</a></li>
                     }
                 </ul>
                 <ul class="nav navbar-nav pull-right">
                     @if(User.Identity.IsAuthenticated)
                     {
-                        var currentUser = Borrowers.CurrentUser;
                         <li class="dropdown">
                             <a class="dropdown-toggle" href="#" data-toggle="dropdown">
                                 Hello @currentUser?.GreetingName<b class="caret"></b>
