@@ -25,33 +25,15 @@ namespace BookCountry.Models
         /// method GetAll
         /// </summary>
         /// <returns>collection of books</returns>
-        public IEnumerable<Book> GetAll()
-        {
-            using (var connection = GetConnection())
-            {
-                connection.Open();
-                var books = connection.Query<Book,Format,Language,Publisher,BookAuthor,Author,Book>(BOOKS_SQL,
-                    (book, format, language, publisher, bookAuthor, author) =>
-                    {
-                        book.Format = format;
-                        book.Language = language;
-                        book.Publisher = publisher;
-                        bookAuthor.Author = author;
-                        book.BooksAuthors.Add(bookAuthor);
-                        return book;
-                    })
-                    .GroupBy(book => book.Id)
-                    .Select(group =>
-                    {
-                        var combinedBook = group.First();
-                        combinedBook.BooksAuthors = group.Select(book => book.BooksAuthors.Single()).ToList();
-                        return combinedBook;
-                    })
-                    .ToList();
+        public IEnumerable<Book> GetAll() => QueryBooks(BOOKS_SQL);
 
-                return books;
-            }
-        }
+        /// <summary>
+        /// Gets a book by unique ID.
+        /// </summary>
+        /// <param name="bookId">Book unique ID.</param>
+        /// <returns>Book instance.</returns>
+        public Book GetById(int bookId) => QueryBooks(BOOKS_SQL + " WHERE b.id = @BookId;",
+            new { BookId = bookId }).FirstOrDefault();
 
 
 
@@ -88,6 +70,7 @@ namespace BookCountry.Models
                 }
             }
         }
+
 
 
         /// <summary>
@@ -187,6 +170,7 @@ namespace BookCountry.Models
         }
 
 
+
         /// <summary>
         /// method AddAuthor
         /// </summary>
@@ -242,10 +226,25 @@ namespace BookCountry.Models
                 "lang.name = @Language";
 
             var text = searchTemplate.Trim();
+            return QueryBooks(BOOKS_SEARCH_SQL,
+                new
+                {
+                    SearchTemplate = $"%{text}%",
+                    Author = text,
+                    Isbn = text,
+                    DeweyCode = $"{text}%",
+                    Language = text
+                });
+        }
+
+
+
+        private IEnumerable<Book> QueryBooks(string sql, object param=null)
+        {
             using(var connection = GetConnection())
             {
                 connection.Open();
-                var books = connection.Query<Book,Format,Language,Publisher,BookAuthor,Author,Book>(BOOKS_SEARCH_SQL,
+                var books = connection.Query<Book,Format,Language,Publisher,BookAuthor,Author,Book>(sql,
                     (book, format, language, publisher, bookAuthor, author) =>
                     {
                         book.Format = format;
@@ -254,15 +253,7 @@ namespace BookCountry.Models
                         bookAuthor.Author = author;
                         book.BooksAuthors.Add(bookAuthor);
                         return book;
-                    },
-                    new
-                    {
-                        SearchTemplate = $"%{text}%",
-                        Author = text,
-                        Isbn = text,
-                        DeweyCode = $"{text}%",
-                        Language = text
-                    })
+                    }, param)
                     .GroupBy(book => book.Id)
                     .Select(group =>
                     {

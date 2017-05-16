@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Loan>
+
+<h1>My Reservations</h1>
+<br />
+<table class="table table-bordered table-responsive table-hover table-striped table-condensed">
+    <tr>
+        <th>ID</th>
+        <th>Borrower ID</th>
+        <th>Borrower</th>
+        <th>Book</th>
+        <th>Reserved At</th>
+        <th></th>
+    </tr>
+    @foreach(var loan in Model)
+    {
+        <tr>
+            <td>@loan.Id</td>
+            <td>@loan.Borrower.Id</td>
+            <td>@loan.Borrower.FullName</td>
+            <td>@loan.Book.Title</td>
+            <td>@loan.ReservedAt.ToString("MM-dd-yyyy hh:mm")</td>
+            <td><a class="btn btn-sm btn-danger" asp-action="Cancel" asp-route-loanId="@loan.Id">Cancel</a></td>
+        </tr>
+    }
+</table>
+<br/>
+<a class="btn btn-danger" asp-action="CancelAll">Cancel all reservations</a>

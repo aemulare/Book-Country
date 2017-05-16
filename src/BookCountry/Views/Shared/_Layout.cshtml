@@ -52,8 +52,12 @@
                                 Hello @currentUser?.GreetingName<b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a asp-controller="Borrowers" asp-action="Edit"
-                                    asp-route-borrowerId="@currentUser?.Id">My Profile</a></li>
+                                <li>
+                                    <a asp-controller="Borrowers" asp-action="Edit" asp-route-borrowerId="@currentUser?.Id">My Profile</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Loans" asp-action="Reservations">My Reservations</a>
+                                </li>
                             </ul>
                         </li>
                         <li><a asp-controller="Accounts" asp-action="Logout">Logout</a></li>
