@@ -36,6 +36,23 @@ namespace BookCountry.Models
 
 
         /// <summary>
+        /// Determines the number of reservations for the specified book.
+        /// </summary>
+        /// <param name="book">Book instance.</param>
+        /// <returns>The number of reservation.</returns>
+        public int CountReserved(Book book)
+        {
+            const string SQL = "SELECT COUNT(*) FROM loans WHERE bookId = @BookId";
+            using(var connection = GetConnection())
+            {
+                connection.Open();
+                return connection.Query<int>(SQL, new { BookId = book.Id }).First();
+            }
+        }
+
+
+
+        /// <summary>
         /// Reserves a book.
         /// Adds a new record in loans data table.
         /// </summary>

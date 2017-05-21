@@ -19,7 +19,7 @@
                 <li class="list-group-item book-lang"><strong>Language:&nbsp;</strong>@book.Language.Name</li>
                 <li class="list-group-item isbn"><strong>ISBN-13:&nbsp;</strong>@book.Isbn</li>
                 <li class="list-group-item isbn"><strong>Dewey Code:&nbsp;</strong>@book.DeweyCode</li>
-                <li class="list-group-item">@book.Quantity copies available</li>
+                <li class="list-group-item">@book.AvailableCount copies available</li>
             </ul>
             <div class="card-block">
                 <a class="btn btn-success" asp-controller="Loans" asp-action="Reserve" asp-route-bookId="@book.Id">Reserve Book</a>

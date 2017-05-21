@@ -18,15 +18,17 @@ namespace BookCountry.Controllers
     {
         private readonly IBooksRepository books;
         private readonly IBorrowersRepository borrowers;
+        private readonly ILoansRepository loans;
 
 
         /// <summary>
         /// Constructors.
         /// </summary>
-        public BooksController(IBooksRepository repo, IBorrowersRepository borrowers)
+        public BooksController(IBooksRepository repo, IBorrowersRepository borrowers, ILoansRepository loans)
         {
             this.books = repo;
             this.borrowers = borrowers;
+            this.loans = loans;
         }
 
 
@@ -76,6 +78,8 @@ namespace BookCountry.Controllers
         public IActionResult Show(int bookId)
         {
             var book = books.GetAll().FirstOrDefault(b => b.Id == bookId);
+            var reserved = loans.CountReserved(book);
+            book.AvailableCount = (book.Quantity ?? 0) - reserved;
             return View(book);
         }
 

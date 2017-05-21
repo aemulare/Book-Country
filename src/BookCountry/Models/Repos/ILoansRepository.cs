@@ -18,6 +18,13 @@ namespace BookCountry.Models
         IEnumerable<Loan> GetReservations(int borrowerId);
 
         /// <summary>
+        /// Determines the number of reservations for the specified book.
+        /// </summary>
+        /// <param name="book">Book instance.</param>
+        /// <returns>The number of reservation.</returns>
+        int CountReserved(Book book);
+
+        /// <summary>
         /// Adds a new record in loans data table.
         /// </summary>
         void Add(Loan loan);

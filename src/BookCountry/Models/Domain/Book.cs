@@ -22,12 +22,13 @@ namespace BookCountry.Models
 
         public string Edition { get; set; }
 
-        [Required(ErrorMessage = "?")]
+        [Required(ErrorMessage="?")]
         public DateTime? PublishedOn { get; set; }
 
         public Publisher Publisher { get; set; }
 
         public Language Language { get; set; }
+
         public Format Format { get; set; }
 
         [Required(ErrorMessage="required")]
@@ -40,6 +41,11 @@ namespace BookCountry.Models
 
         [Required(ErrorMessage="required")]
         public int? Quantity { get; set; }
+
+        /// <summary>
+        /// The number of book copies available for reservation.
+        /// </summary>
+        public int? AvailableCount { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
