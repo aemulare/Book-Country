@@ -8,8 +8,8 @@ namespace BookCountry.Models
         public Book Book { get; set; }
 
         public DateTime ReservedAt { get; set; }
-        public DateTime IssueDate { get; set; }
-        public DateTime ReturnDate { get; set; }
-        public DateTime ReturnedOn { get; set; }
+        public DateTime? IssueDate { get; set; }
+        public DateTime? ReturnDate { get; set; }
+        public DateTime? ReturnedOn { get; set; }
     }
 }

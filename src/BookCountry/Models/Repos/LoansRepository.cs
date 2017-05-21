@@ -25,6 +25,7 @@ namespace BookCountry.Models
         /// <returns>A collection of all loans.</returns>
         public IEnumerable<Loan> GetAll() => QueryLoans(LOANS_SQL);
 
+
         /// <summary>
         /// Gets a collection of all reservations for the specified borrower.
         /// </summary>

@@ -4,21 +4,29 @@
 <br />
 <table class="table table-bordered table-responsive table-hover table-striped table-condensed">
     <tr>
-        <th>ID</th>
-        <th>Borrower ID</th>
-        <th>Borrower</th>
-        <th>Book</th>
-        <th>Reserved At</th>
+        <th>Loan ID</th>
+        @*<th>Borrower ID</th>
+        <th>Borrower</th>*@
+        <th>Title</th>
+        <th>Book ID</th>
+        <th>ISBN</th>
+        <th>Reservation date</th>
+        <th>Issue date</th>
+        <th>Return date</th>
         <th></th>
     </tr>
     @foreach(var loan in Model)
     {
         <tr>
             <td>@loan.Id</td>
-            <td>@loan.Borrower.Id</td>
-            <td>@loan.Borrower.FullName</td>
+            @*<td>@loan.Borrower.Id</td>
+            <td>@loan.Borrower.FullName</td>*@
             <td>@loan.Book.Title</td>
+            <td>@loan.Book.Id</td>
+            <td>@loan.Book.Isbn</td>
             <td>@loan.ReservedAt.ToString("MM-dd-yyyy hh:mm")</td>
+            <td>@loan.IssueDate?.ToString("MM-dd-yyyy hh:mm")</td>
+            <td>@loan.ReturnDate?.ToString("MM-dd-yyyy hh:mm")</td>
             <td><a class="btn btn-sm btn-danger" asp-action="Cancel" asp-route-loanId="@loan.Id">Cancel</a></td>
         </tr>
     }
