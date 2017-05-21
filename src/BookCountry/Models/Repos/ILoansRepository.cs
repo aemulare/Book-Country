@@ -21,8 +21,9 @@ namespace BookCountry.Models
         /// Determines the number of reservations for the specified book.
         /// </summary>
         /// <param name="book">Book instance.</param>
+        /// <param name="borrower">Borrower instance.</param>
         /// <returns>The number of reservation.</returns>
-        int CountReserved(Book book);
+        int CountReserved(Book book, Borrower borrower=null);
 
         /// <summary>
         /// Adds a new record in loans data table.

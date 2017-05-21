@@ -77,10 +77,14 @@ namespace BookCountry.Controllers
         [AllowAnonymous]
         public IActionResult Show(int bookId)
         {
+            var user = borrowers.CurrentUser;
             var book = books.GetAll().FirstOrDefault(b => b.Id == bookId);
+            var viewModel = new BookViewModel(book);
             var reserved = loans.CountReserved(book);
-            book.AvailableCount = (book.Quantity ?? 0) - reserved;
-            return View(book);
+            var available = (book.Quantity ?? 0) - reserved;
+            viewModel.AvailableCount = available > 0 ? available : 0;
+            viewModel.IsAvailable = user != null && loans.CountReserved(book, user) == 0;
+            return View(viewModel);
         }
 
 

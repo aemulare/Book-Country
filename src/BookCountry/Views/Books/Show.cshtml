@@ -1,5 +1,5 @@
-﻿@model BookCountry.Models.Book
-@{ var book = Model;}
+﻿@model BookViewModel
+@{ var book = Model.Book;}
 
 <h1> </h1>
 <div class="row">
@@ -19,11 +19,21 @@
                 <li class="list-group-item book-lang"><strong>Language:&nbsp;</strong>@book.Language.Name</li>
                 <li class="list-group-item isbn"><strong>ISBN-13:&nbsp;</strong>@book.Isbn</li>
                 <li class="list-group-item isbn"><strong>Dewey Code:&nbsp;</strong>@book.DeweyCode</li>
-                <li class="list-group-item">@book.AvailableCount copies available</li>
+                <li class="list-group-item">@Model.AvailableCount copies available</li>
             </ul>
-            <div class="card-block">
-                <a class="btn btn-success" asp-controller="Loans" asp-action="Reserve" asp-route-bookId="@book.Id">Reserve Book</a>
-            </div>
+            @if(User.Identity.IsAuthenticated)
+            {
+                <div class="card-block">
+                    @if(Model.IsAvailable)
+                    {
+                        <a class="btn btn-success" asp-controller="Loans" asp-action="Reserve" asp-route-bookId="@book.Id">Reserve Book</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-success disabled">Reserve Book</a>
+                    }
+                </div>
+            }
         </div>
     </div>
 </div>

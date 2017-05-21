@@ -42,11 +42,6 @@ namespace BookCountry.Models
         [Required(ErrorMessage="required")]
         public int? Quantity { get; set; }
 
-        /// <summary>
-        /// The number of book copies available for reservation.
-        /// </summary>
-        public int? AvailableCount { get; set; }
-
         public DateTime CreatedAt { get; set; }
 
         public string Cover { get; set; }
