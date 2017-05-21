@@ -24,4 +24,11 @@
     }
 </table>
 <br/>
-<a class="btn btn-danger" asp-action="CancelAll">Cancel all reservations</a>
+@if(Model.Any())
+{
+    <a class="btn btn-danger" asp-action="CancelAll">Cancel all reservations</a>
+}
+else
+{
+    <a class="btn btn-danger disabled">Cancel all reservations</a>
+}
