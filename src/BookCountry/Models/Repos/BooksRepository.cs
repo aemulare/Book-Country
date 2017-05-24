@@ -13,7 +13,7 @@ namespace BookCountry.Models
             "INNER JOIN languages as lang ON b.languageId = lang.id " +
             "INNER JOIN publishers as pub ON b.publisherId = pub.id " +
             "INNER JOIN books_authors as ba ON ba.bookId = b.id " +
-            "INNER JOIN authors as aut ON aut.id = ba.authorId";
+            "INNER JOIN authors as aut ON aut.id = ba.authorId ";
 
         /// <summary>
         /// constructor
@@ -25,7 +25,7 @@ namespace BookCountry.Models
         /// method GetAll
         /// </summary>
         /// <returns>collection of books</returns>
-        public IEnumerable<Book> GetAll() => QueryBooks(BOOKS_SQL);
+        public IEnumerable<Book> GetAll() => QueryBooks(BOOKS_SQL).OrderBy(b => b.Id);
 
         /// <summary>
         /// Gets a book by unique ID.

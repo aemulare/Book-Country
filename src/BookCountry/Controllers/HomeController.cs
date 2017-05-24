@@ -8,7 +8,7 @@ namespace BookCountry.Controllers
         [AllowAnonymous]
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Welcome to Book Country!";
 
             return View();
         }
@@ -18,7 +18,7 @@ namespace BookCountry.Controllers
         [AllowAnonymous]
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Please contact us with information provides below.";
             return View();
         }
     }

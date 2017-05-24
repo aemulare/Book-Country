@@ -1,11 +1,11 @@
 create table loans(
-`id` int unsigned not null,
+`id` int unsigned not null auto_increment,
 `borrowerId` int unsigned not null,
 `bookId` int unsigned not null,
 `reservedAt` datetime not null,
-`issueDate` datetime not null CHECK (`issueDate` > `reservedAt`),
-`returnDate` datetime not null CHECK (`returnDate` > `issueDate`),
-`returnedOn` datetime CHECK (`returnedOn` > `issueDate`),
+`issueDate` datetime null CHECK (`issueDate` > `reservedAt`),
+`returnDate` datetime null CHECK (`returnDate` > `issueDate`),
+`returnedOn` datetime null CHECK (`returnedOn` > `issueDate`),
 
 PRIMARY KEY (`id`),
 FOREIGN KEY (`borrowerId`) REFERENCES borrowers(`id`),
