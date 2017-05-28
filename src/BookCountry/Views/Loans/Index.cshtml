@@ -21,9 +21,9 @@
             <td>@loan.Borrower.FullName</td>
             <td>@loan.Book.Title</td>
             <td>@loan.ReservedAt.ToString("MM-dd-yyyy hh:mm")</td>
-            <td>@loan.IssueDate.ToString("MM-dd-yyyy hh:mm")</td>
-            <td>@loan.ReturnDate.ToString("MM-dd-yyyy hh:mm")</td>
-            <td>@loan.ReturnedOn.ToString("MM-dd-yyyy hh:mm")</td> 
+            <td>@loan.IssueDate?.ToString("MM-dd-yyyy hh:mm")</td>
+            <td>@loan.ReturnDate?.ToString("MM-dd-yyyy hh:mm")</td>
+            <td>@loan.ReturnedOn?.ToString("MM-dd-yyyy hh:mm")</td> 
         </tr>
     }
 </table>
